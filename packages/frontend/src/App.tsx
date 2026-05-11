@@ -1,190 +1,141 @@
-import { useCallback, useEffect, useState } from 'react'
-import {
-  Header,
-  HeroSection,
-  TaskInput,
-  TaskList,
-  FocusModeCard,
-  ArchiveActions
-} from './components'
+import { useState } from 'react'
+import { Header, TaskInput, TaskList } from './components'
 import type { Task } from './types/task'
-import * as api from './api/tasksApi'
 
 type View = 'Tasks' | 'Focus' | 'Archive'
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [input, setInput] = useState('')
+  const [details, setDetails] = useState('')
   const [currentView, setCurrentView] = useState<View>('Tasks')
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
 
-  const refresh = useCallback(async () => {
-    setError(null)
-    const data = await api.fetchTasks()
-    setTasks(data)
-  }, [])
+  const addTask = () => {
+    const trimmed = input.trim()
+    if (!trimmed) return
 
-  useEffect(() => {
-    let cancelled = false
-    setLoading(true)
-    refresh()
-      .catch((e: unknown) => {
-        if (!cancelled) {
-          setError(e instanceof Error ? e.message : 'Failed to load tasks')
-        }
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false)
-      })
-    return () => {
-      cancelled = true
+    const newTask: Task = {
+      id: Date.now(),
+      text: trimmed,
+      completed: false,
+      isHighImpact: false
     }
-  }, [refresh])
 
-  const addTask = async () => {
-    if (!input.trim()) return
-    setError(null)
-    try {
-      const created = await api.createTask(input.trim())
-      setTasks((prev) => [...prev, created])
-      setInput('')
-    } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : 'Could not create task')
-    }
+    setTasks((prev) => [...prev, newTask])
+    setInput('')
+    setDetails('')
   }
 
-  const toggleTask = async (id: number) => {
-    const t = tasks.find((x) => x.id === id)
-    if (!t) return
-    setError(null)
-    try {
-      const updated = await api.patchTask(id, { completed: !t.completed })
-      setTasks((prev) => prev.map((task) => (task.id === id ? updated : task)))
-    } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : 'Could not update task')
-    }
-  }
-
-  const toggleHighImpact = async (id: number) => {
-    const t = tasks.find((x) => x.id === id)
-    if (!t) return
-    setError(null)
-    try {
-      const updated = await api.patchTask(id, { isHighImpact: !t.isHighImpact })
-      setTasks((prev) => prev.map((task) => (task.id === id ? updated : task)))
-    } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : 'Could not update task')
-    }
-  }
-
-  const deleteTask = async (id: number) => {
-    setError(null)
-    try {
-      await api.deleteTask(id)
-      setTasks((prev) => prev.filter((task) => task.id !== id))
-    } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : 'Could not delete task')
-    }
-  }
-
-  const archiveCompletedTasks = async () => {
-    const completed = tasks.filter((task) => task.completed)
-    setError(null)
-    try {
-      await Promise.all(completed.map((t) => api.deleteTask(t.id)))
-      setTasks((prev) => prev.filter((task) => !task.completed))
-      setCurrentView('Tasks')
-    } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : 'Could not clear archive')
-      await refresh()
-    }
-  }
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      void addTask()
-    }
-  }
-
-  const getFilteredTasks = () => {
-    if (currentView === 'Focus') {
-      return tasks.filter((task) => !task.completed && task.isHighImpact)
-    }
-    if (currentView === 'Archive') {
-      return tasks.filter((task) => task.completed)
-    }
-    return tasks.filter((task) => !task.completed)
-  }
-
-  const filteredTasks = getFilteredTasks()
-  const archivedCount = tasks.filter((task) => task.completed).length
-  const highImpactCount = tasks.filter((task) => !task.completed && task.isHighImpact).length
-
-  if (loading) {
-    return (
-      <div className="bg-[#f8fafa] min-h-screen flex items-center justify-center text-slate-600">
-        Loading tasks…
-      </div>
+  const toggleTask = (id: number) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
     )
   }
 
+  const deleteTask = (id: number) => {
+    setTasks((prev) => prev.filter((task) => task.id !== id))
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      addTask()
+    }
+  }
+
+  const getViewTitle = () => {
+    switch (currentView) {
+      case 'Focus':
+        return 'Focus Mode'
+      case 'Archive':
+        return 'Archived'
+      default:
+        return 'My Day'
+    }
+  }
+
+  const getViewSubtitle = () => {
+    switch (currentView) {
+      case 'Focus':
+        return 'High-impact tasks only.'
+      case 'Archive':
+        return 'Completed and archived tasks.'
+      default:
+        return 'Focus on what matters most.'
+    }
+  }
+
+  const filteredTasks = (() => {
+    switch (currentView) {
+      case 'Focus':
+        return tasks.filter((t) => !t.completed && t.isHighImpact)
+      case 'Archive':
+        return tasks.filter((t) => t.completed)
+      default:
+        return tasks.filter((t) => !t.completed)
+    }
+  })()
+
   return (
-    <div className="bg-[#f8fafa] min-h-screen">
+    <div className="min-h-screen bg-slate-50">
       <Header currentView={currentView} onChangeView={setCurrentView} />
 
-      <div className="min-h-screen flex items-start justify-center pt-12 px-6">
-        <div className="w-full max-w-[500px]">
-          {error && (
-            <div
-              className="mb-4 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900"
-              role="alert"
-            >
-              {error}
-            </div>
-          )}
-
-          <HeroSection
-            currentView={currentView}
-            highImpactCount={highImpactCount}
-            archivedCount={archivedCount}
-          />
-
-          {currentView !== 'Archive' && (
-            <TaskInput
-              value={input}
-              onChange={setInput}
-              onKeyPress={handleKeyPress}
-              onAddClick={() => void addTask()}
-            />
-          )}
-
-          <TaskList
-            tasks={filteredTasks}
-            currentView={currentView}
-            onToggle={(id) => void toggleTask(id)}
-            onDelete={(id) => void deleteTask(id)}
-            onToggleHighImpact={(id) => void toggleHighImpact(id)}
-            isEmpty={filteredTasks.length === 0}
-          />
-
-          {currentView !== 'Archive' && highImpactCount > 0 && (
-            <FocusModeCard
-              highImpactCount={highImpactCount}
-              isInFocusView={currentView === 'Focus'}
-              onViewInsights={() => setCurrentView('Focus')}
-              onBackToTasks={() => setCurrentView('Tasks')}
-            />
-          )}
-
-          {currentView === 'Archive' && archivedCount > 0 && (
-            <ArchiveActions
-              onBackToTasks={() => setCurrentView('Tasks')}
-              onClearArchive={() => void archiveCompletedTasks()}
-            />
-          )}
+      <main className="mx-auto w-full max-w-2xl px-4 py-10">
+        {/* Hero Section */}
+        <div className="mb-10 text-center">
+          <h1 className="text-5xl font-bold text-slate-900">{getViewTitle()}</h1>
+          <p className="mt-3 text-lg text-slate-500">{getViewSubtitle()}</p>
         </div>
-      </div>
+
+        {/* Task Input Form */}
+        {currentView !== 'Archive' && (
+          <div className="mb-10 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="space-y-4">
+              <div className="flex gap-3">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Add a methodical task..."
+                  className="h-12 flex-1 rounded-lg border border-slate-300 bg-slate-50 px-4 text-slate-900 placeholder-slate-400 focus:border-slate-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-400"
+                />
+                <button
+                  type="button"
+                  onClick={addTask}
+                  className="inline-flex h-12 items-center gap-2 rounded-lg bg-red-600 px-6 text-white font-semibold hover:bg-red-700 transition"
+                >
+                  <span>+</span>
+                  Add
+                </button>
+              </div>
+
+              {/* Details Section */}
+              <details className="group">
+                <summary className="cursor-pointer select-none text-sm font-semibold text-slate-700 uppercase tracking-wider">
+                  Details <span className="text-slate-400">(optional)</span>
+                </summary>
+                <textarea
+                  value={details}
+                  onChange={(e) => setDetails(e.target.value)}
+                  placeholder="Add context, links, or sub-steps..."
+                  className="mt-3 w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-slate-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-400"
+                  rows={4}
+                />
+              </details>
+            </div>
+          </div>
+        )}
+
+        {/* Task List */}
+        <TaskList
+          tasks={filteredTasks}
+          onToggle={toggleTask}
+          onDelete={deleteTask}
+          isEmpty={filteredTasks.length === 0}
+        />
+      </main>
     </div>
   )
 }

@@ -11,20 +11,26 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({ currentView, onCha
   const tabs: View[] = ['Tasks', 'Focus', 'Archive']
 
   return (
-    <div className="flex gap-8 items-center">
-      {tabs.map((tab) => (
-        <button
-          key={tab}
-          onClick={() => onChangeView(tab)}
-          className={`font-semibold text-base pb-1 transition-colors ${
-            currentView === tab
-              ? 'text-[#4c1d95] border-b-2 border-[#4c1d95]'
-              : 'text-[#a78bfa] hover:text-[#4c1d95]'
-          }`}
-        >
-          {tab}
-        </button>
-      ))}
-    </div>
+    <nav aria-label="Primary navigation">
+      <div className="flex items-center gap-8">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            type="button"
+            onClick={() => onChangeView(tab)}
+            className={`relative text-sm font-semibold transition-colors ${
+              currentView === tab
+                ? 'text-purple-700'
+                : 'text-purple-400 hover:text-purple-700'
+            }`}
+          >
+            <span>{tab}</span>
+            {currentView === tab && (
+              <span className="absolute inset-x-0 -bottom-1 h-0.5 rounded-full bg-purple-700" />
+            )}
+          </button>
+        ))}
+      </div>
+    </nav>
   )
 }

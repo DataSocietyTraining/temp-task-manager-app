@@ -1,6 +1,7 @@
 // Components
 export { Button } from './Button'
 export { TaskInput } from './TaskInput'
+export { TaskCard } from './TaskCard'
 export { TaskItem } from './TaskItem'
 export { TaskList } from './TaskList'
 export { EmptyState } from './EmptyState'
