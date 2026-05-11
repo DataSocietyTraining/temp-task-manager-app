@@ -1,19 +1,12 @@
-// ─────────────────────────────────────────────
-//  Global Error Handler Middleware
-//
-//  TODO: Implement a middleware function that:
-//    1. Logs the error
-//    2. Sends a JSON response with a message and
-//       an appropriate HTTP status code
-// ─────────────────────────────────────────────
-
 import { Request, Response, NextFunction } from 'express';
 
-export const errorHandler = (
+export function errorHandler(
   err: Error,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction
-): void => {
-  // TODO
-};
+  _next: NextFunction
+): void {
+  console.error(err);
+  if (res.headersSent) return;
+  res.status(500).json({ error: 'internal_error', message: err.message });
+}
