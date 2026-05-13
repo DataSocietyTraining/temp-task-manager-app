@@ -1,14 +1,15 @@
 {
-  "name": "task-manager-app",
+  "name": "task-manager-copilot-starter",
   "version": "1.0.0",
   "private": true,
-  "description": "Full-stack task management app — React + Vite frontend, Express + TypeScript backend.",
+  "description": "Lean Copilot starter for implementing the Task Manager API from a working reference app.",
   "scripts": {
     "dev:backend": "pnpm --filter backend dev",
     "dev:frontend": "pnpm --filter frontend dev",
     "test": "pnpm --filter tests test",
     "build:backend": "pnpm --filter backend build",
-    "build:frontend": "pnpm --filter frontend build"
+    "build:frontend": "pnpm --filter frontend build",
+    "check": "pnpm -r exec tsc --noEmit --pretty false"
   },
   "engines": {
     "node": ">=20"

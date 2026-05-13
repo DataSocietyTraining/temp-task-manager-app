@@ -1,8 +1,8 @@
 {
-  "name": "task-manager-frontend-learner",
+  "name": "frontend",
   "version": "1.0.0",
   "private": true,
-  "description": "Learner workspace: same To-Do UI as task-manager-app; implement src/api/tasksApi.ts",
+  "description": "Learner frontend state: To-Do UI with src/api/tasksApi.ts intentionally stubbed for Copilot implementation",
   "type": "module",
   "scripts": {
     "dev": "vite",

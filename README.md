@@ -1,61 +1,40 @@
-# temp-task-manager-app
+# temp task manager
 
-- Frontend: React + Vite
-- Backend: Express + TypeScript
+Lean starter derived from the completed Task Manager app.
 
-## Prerequisites
+This version uses the uploaded learner frontend state. The UI is present, but `packages/frontend/src/api/tasksApi.ts` is intentionally stubbed so learners can implement the API client with Copilot.
 
-- Node.js 20 or later
-- `pnpm`
+The backend is also intentionally lean so learners can implement schema validation, route handlers, route mapping, and tests without fighting project setup issues.
 
-If `pnpm` is not installed, install it with:
-
-```bash
-npm install -g pnpm
-```
-
-## Install Dependencies
-
-From the project root, run:
+## Run
 
 ```bash
 pnpm install
+pnpm dev:backend
+pnpm dev:frontend
 ```
 
-This installs dependencies for all workspace packages under `packages/`.
+Backend: http://localhost:3001  
+Frontend: http://localhost:5174
 
-## Run the Starter App
+The uploaded frontend Vite config uses port `5174` to avoid clashing with another reference frontend on `5173`.
 
-Open two terminal tabs from the project root.
+## Starter behavior
 
-Start the backend:
+- `GET /api/health` works.
+- Backend `GET /api/tasks` returns `[]` so the UI can load.
+- Frontend `fetchTasks()` currently returns `[]` from the learner stub.
+- Frontend `createTask`, `patchTask`, and `deleteTask` intentionally throw learner-stub errors.
+- Backend `POST`, `PATCH`, and `DELETE` controller logic is intentionally incomplete.
 
-```bash
-pnpm --dir packages/backend dev
+## Main learner files
+
+```text
+packages/frontend/src/api/tasksApi.ts
+packages/backend/src/schemas/task.ts
+packages/backend/src/controllers/tasksController.ts
+packages/backend/src/routes/tasksRoutes.ts
+packages/tests/integration/tasksHttp.test.ts
 ```
 
-Start the frontend:
-
-```bash
-pnpm --dir packages/frontend dev
-```
-
-Default local URLs:
-
-- Frontend: `http://localhost:5174`
-- Backend: `http://localhost:3001`
-
-## Build
-
-Build the backend:
-
-```bash
-pnpm --dir packages/backend build
-```
-
-Build the frontend:
-
-```bash
-pnpm --dir packages/frontend build
-```
-
+See `COPILOT_IMPLEMENTATION_PATH.md` for the exact prompt sequence.
