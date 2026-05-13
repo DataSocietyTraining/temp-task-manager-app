@@ -65,7 +65,7 @@ export function createTask(
 
 export function updateTask(
   id: number,
-  patch: Partial<Pick<Task, 'text' | 'completed' | 'isHighImpact' | 'description' | 'status'>>
+  patch: Partial<Pick<Task, 'text' | 'completed' | 'isHighImpact' | 'description'>>
 ): Task | undefined {
   const idx = tasks.findIndex((t) => t.id === id);
   if (idx === -1) return undefined;
