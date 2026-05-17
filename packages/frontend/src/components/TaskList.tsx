@@ -1,12 +1,6 @@
 import React from 'react'
 import { TaskItem } from './TaskItem'
-
-interface Task {
-  id: number
-  text: string
-  completed: boolean
-  isHighImpact: boolean
-}
+import type { Task } from '../types/task'
 
 interface TaskListProps {
   tasks: Task[]
@@ -17,13 +11,13 @@ interface TaskListProps {
 
 export const TaskList: React.FC<TaskListProps> = ({ tasks, onToggle, onDelete, isEmpty }) => {
   return (
-    <div className="space-y-3">
+    <div className="space-y-[16px]">
       {isEmpty ? (
-        <p className="py-12 text-center text-slate-500">
-          No tasks yet. Add one to get started!
-        </p>
+        <p className="py-[24px] text-center text-[#7a7581]">No tasks found.</p>
       ) : (
-        tasks.map((task) => <TaskItem key={task.id} task={task} onToggle={onToggle} onDelete={onDelete} />)
+        tasks.map((task) => (
+          <TaskItem key={task.id} task={task} onToggle={onToggle} onDelete={onDelete} />
+        ))
       )}
     </div>
   )

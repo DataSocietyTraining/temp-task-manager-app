@@ -1,141 +1,120 @@
 import { useState } from 'react'
-import { Header, TaskInput, TaskList } from './components'
+import { Header, TaskInput, TaskList, FocusModeCard } from './components'
 import type { Task } from './types/task'
 
 type View = 'Tasks' | 'Focus' | 'Archive'
 
+const initialTasks: Task[] = [
+  {
+    id: 1,
+    text: 'Review quarterly design guidelines',
+    completed: false,
+    isHighImpact: false,
+  },
+  {
+    id: 2,
+    text: 'Prepare editorial bento layout assets',
+    completed: false,
+    isHighImpact: false,
+  },
+  {
+    id: 3,
+    text: 'Check typographic scales for accessibility',
+    completed: true,
+    isHighImpact: false,
+  },
+  {
+    id: 4,
+    text: 'Morning focus session: Tonal depth study',
+    completed: true,
+    isHighImpact: false,
+  },
+]
+
 function App() {
-  const [tasks, setTasks] = useState<Task[]>([])
+  const [tasks, setTasks] = useState<Task[]>(initialTasks)
   const [input, setInput] = useState('')
-  const [details, setDetails] = useState('')
   const [currentView, setCurrentView] = useState<View>('Tasks')
 
   const addTask = () => {
     const trimmed = input.trim()
     if (!trimmed) return
 
-    const newTask: Task = {
+    const nextTask: Task = {
       id: Date.now(),
       text: trimmed,
       completed: false,
-      isHighImpact: false
+      isHighImpact: false,
     }
 
-    setTasks((prev) => [...prev, newTask])
+    setTasks((previousTasks) => [...previousTasks, nextTask])
     setInput('')
-    setDetails('')
+  }
+
+  const deleteTask = (id: number) => {
+    setTasks((previousTasks) => previousTasks.filter((t) => t.id !== id))
   }
 
   const toggleTask = (id: number) => {
-    setTasks((prev) =>
-      prev.map((task) =>
+    setTasks((previousTasks) =>
+      previousTasks.map((task) =>
         task.id === id ? { ...task, completed: !task.completed } : task
       )
     )
   }
 
-  const deleteTask = (id: number) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id))
-  }
+  const sortedTasks = (taskList: Task[]) =>
+    [...taskList].sort((a, b) => Number(a.completed) - Number(b.completed))
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      addTask()
-    }
-  }
-
-  const getViewTitle = () => {
-    switch (currentView) {
-      case 'Focus':
-        return 'Focus Mode'
-      case 'Archive':
-        return 'Archived'
-      default:
-        return 'My Day'
-    }
-  }
-
-  const getViewSubtitle = () => {
-    switch (currentView) {
-      case 'Focus':
-        return 'High-impact tasks only.'
-      case 'Archive':
-        return 'Completed and archived tasks.'
-      default:
-        return 'Focus on what matters most.'
-    }
-  }
-
-  const filteredTasks = (() => {
-    switch (currentView) {
-      case 'Focus':
-        return tasks.filter((t) => !t.completed && t.isHighImpact)
-      case 'Archive':
-        return tasks.filter((t) => t.completed)
-      default:
-        return tasks.filter((t) => !t.completed)
-    }
-  })()
+  const currentTasks =
+    currentView === 'Archive'
+      ? tasks.filter((task) => task.completed)
+      : currentView === 'Focus'
+      ? tasks.filter((task) => !task.completed && task.isHighImpact)
+      : sortedTasks(tasks)
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <Header currentView={currentView} onChangeView={setCurrentView} />
+    <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-text)]">
+      <div className="mx-auto max-w-[1296px] px-[24px] md:px-[72px]">
+        <Header currentView={currentView} onChangeView={setCurrentView} />
 
-      <main className="mx-auto w-full max-w-2xl px-4 py-10">
-        {/* Hero Section */}
-        <div className="mb-10 text-center">
-          <h1 className="text-5xl font-bold text-slate-900">{getViewTitle()}</h1>
-          <p className="mt-3 text-lg text-slate-500">{getViewSubtitle()}</p>
-        </div>
+        <main className="mx-auto w-full max-w-[500px] pb-[96px] pt-[48px]">
+          <section className="mb-[40px] text-center">
+            <h1 className="mx-auto w-[174.75px] text-[56px] font-bold leading-[56px] tracking-[-2.8px] text-[#2c125b]">
+              My Day
+            </h1>
+            <p className="mx-auto mt-[8px] w-[215.75px] text-[16px] font-medium leading-[24px] text-[#494550] opacity-70">
+              Focus on what matters most.
+            </p>
+          </section>
 
-        {/* Task Input Form */}
-        {currentView !== 'Archive' && (
-          <div className="mb-10 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="space-y-4">
-              <div className="flex gap-3">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Add a methodical task..."
-                  className="h-12 flex-1 rounded-lg border border-slate-300 bg-slate-50 px-4 text-slate-900 placeholder-slate-400 focus:border-slate-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-400"
-                />
-                <button
-                  type="button"
-                  onClick={addTask}
-                  className="inline-flex h-12 items-center gap-2 rounded-lg bg-red-600 px-6 text-white font-semibold hover:bg-red-700 transition"
-                >
-                  <span>+</span>
-                  Add
-                </button>
-              </div>
+          {currentView !== 'Archive' && (
+            <TaskInput
+              value={input}
+              onChange={setInput}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') addTask()
+              }}
+              onAddClick={addTask}
+              placeholder="Add a methodical task..."
+            />
+          )}
 
-              {/* Details Section */}
-              <details className="group">
-                <summary className="cursor-pointer select-none text-sm font-semibold text-slate-700 uppercase tracking-wider">
-                  Details <span className="text-slate-400">(optional)</span>
-                </summary>
-                <textarea
-                  value={details}
-                  onChange={(e) => setDetails(e.target.value)}
-                  placeholder="Add context, links, or sub-steps..."
-                  className="mt-3 w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-slate-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-400"
-                  rows={4}
-                />
-              </details>
-            </div>
-          </div>
-        )}
+          <TaskList
+            tasks={currentTasks}
+            onToggle={toggleTask}
+            onDelete={deleteTask}
+            isEmpty={currentTasks.length === 0}
+          />
 
-        {/* Task List */}
-        <TaskList
-          tasks={filteredTasks}
-          onToggle={toggleTask}
-          onDelete={deleteTask}
-          isEmpty={filteredTasks.length === 0}
-        />
-      </main>
+          <FocusModeCard
+            highImpactCount={tasks.filter((t) => !t.completed && t.isHighImpact).length}
+            isInFocusView={currentView === 'Focus'}
+            onViewInsights={() => setCurrentView('Focus')}
+            onBackToTasks={() => setCurrentView('Tasks')}
+          />
+        </main>
+      </div>
     </div>
   )
 }
