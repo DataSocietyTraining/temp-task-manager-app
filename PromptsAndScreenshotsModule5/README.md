@@ -24,18 +24,14 @@ Demo setup: Connect Figma MCP in VS Code
 
 Demo setup: Branch and files
 =================================================
-- Save your Module 4 end state on a new branch:
-
-- First confirm the working tree is clean:
+- Create a clean working branch from the provided `module-5-start` baseline:
 
 ```bash
-git status
-```
-- If you still have uncommitted Module 4 changes, commit them before creating the Module 5 baseline branch
-```bash
-git checkout -b module-5-start-attempt
+git checkout -b module-5-start-attempt module-5-start
 ```
 
+- This keeps the provided `module-5-start` branch untouched as a safe fallback
+- The new `module-5-start-attempt` branch is the working baseline; a few demos use `git restore` to return to it between prompts
 
 - Open these files in VS Code:
   - `App.tsx`
@@ -48,7 +44,8 @@ Demo setup: Use the Figma frame link (verify MCP)
 - In Copilot Chat (Agent mode), paste this prompt:
 
 ```text
-<FIGMA LINK>
+https://www.figma.com/design/FFPdwRiIoEa5NV3XupRlXV/Full-Stack-IQVIA-course?node-id=7-708&t=Q4sUeZxh1dO2Xopf-1
+
 Get design context from this Figma frame
 ```
 
@@ -57,11 +54,12 @@ Get design context from this Figma frame
 
 Demo: Vague prompt with Figma link
 =================================================
-- Open files: `App.tsx`, `TaskInput.tsx`, `types/task.ts`
+- Files open: `App.tsx`, `TaskInput.tsx`, `types/task.ts`
 - In Copilot Chat (Agent mode):
 
 ```text
-<FIGMA LINK>
+https://www.figma.com/design/FFPdwRiIoEa5NV3XupRlXV/Full-Stack-IQVIA-course?node-id=7-708&t=Q4sUeZxh1dO2Xopf-1<FIGMA LINK>
+
 Recreate the Figma design exactly in React + Tailwind CSS.
 Match spacing, font sizes, and colors precisely.
 ```
@@ -69,7 +67,7 @@ Match spacing, font sizes, and colors precisely.
 
 Demo: Constrained prompt with Figma link
 =================================================
-- Revert the changes:
+- Revert the changes from the vague prompt:
 
 ```bash
 git restore packages/frontend/src/
@@ -80,6 +78,7 @@ git restore packages/frontend/src/
 
 ```text
 <FIGMA LINK>
+
 Using the provided Figma design, generate React + TypeScript components using Tailwind CSS.
 
 Goal: Recreate the UI with pixel-perfect accuracy based on the design source of truth.
@@ -108,20 +107,15 @@ Output: complete working React + TypeScript code. Visual fidelity over abstracti
 
 Live demo: TaskItem variants
 =================================================
-- Revert before this demo:
-
-```bash
-git restore packages/frontend/src/
-```
-
 - Open files:
   - `TaskItem.tsx`
   - `TaskList.tsx`
   - `App.tsx`
   - `types/task.ts`
+- Learners capture screenshots from the Figma file showing TaskItem in:
+  - State 1: active (unchecked)
+  - State 2: completed (checked)
 - Attach both screenshots in Copilot Chat (Agent mode):
-  - `M5_screenshot_R3_state1.png`
-  - `M5_screenshot_R3_state2.png`
 
 ```text
 I am sharing screenshots of two UI states. Build components that implement both states.
@@ -134,71 +128,57 @@ Requirements:
 Design already solved the variants - reuse structure, do not reinvent it.
 ```
 
+- Optional follow-up: try rewording the variant description and observe how the output shifts
 
-Exercise Task 2: FocusModeCard variants
+
+Exercise Task 1: FocusModeCard (fill-in-the-blanks)
 =================================================
-- Do **not** revert before this exercise; build on top of the variant demo
-- Open files:
+
+## Step 1: Describe the card (for learners)
+
+- The Focus Mode card appears when there are high-impact tasks
+- It has two visible states; same layout, one thing changes:
+  - State 1 (not in Focus view): button labeled **'View Insights'**
+  - State 2 (in Focus view): button labeled **'Back to Tasks'**
+- Uses a shared `Button` component already in the codebase; do not generate a new one
+- One prop controls which state is shown: `isInFocusView` (true or false)
+- Files to open:
   - `FocusModeCard.tsx`
   - `App.tsx`
   - `Button.tsx`
-- Attach both screenshots in Copilot Chat (Agent mode):
-  - `M5_screenshot_R4_state1.png`
-  - `M5_screenshot_R4_state2.png`
+
+## Step 2: Give learners the blank prompt
 
 ```text
-Build the FocusModeCard component - one component, two visual states.
+Build the FocusModeCard component with two states - same layout, only the button changes.
 
-The only thing that changes between states is the button label and click handler:
-- When isInFocusView is false: button says 'View Insights' and calls onViewInsights
-- When isInFocusView is true: button says 'Back to Tasks' and calls onBackToTasks
+When the user is not in focus view, the button should say 'View Insights' and [BLANK 1].
+When they are in focus view, it should say 'Back to Tasks' and [BLANK 2].
 
-Everything else is shared layout:
-- Dark gradient background, dark purple tones
-- Title: 'Focus Mode' in white, bold
-- Subtitle: '{count} high-impact tasks waiting' from highImpactCount prop
-- Decorative blurred circle in the bottom-right corner
+The card has a dark purple gradient background, a bold white 'Focus Mode' title, and a subtitle that reads [BLANK 3]. It also has [BLANK 4] in the bottom-right corner.
 
-Props:
-- highImpactCount: number
-- isInFocusView: boolean
-- onViewInsights: function
-- onBackToTasks: function
+Use the existing Button component - don't create a new one. One component, one return statement, no duplicated layout.
 
-Use the existing Button component - import it, do not create a new button.
-Do not duplicate the card layout. One component, one return statement.
+Wire this into App.tsx for full navigation behavior so I can see how it works
 ```
 
+## Step 3: Guiding questions (help learners fill the blanks)
 
-Fix prompt: Integration wiring
-=================================================
-- Use only if the star button or FocusModeCard is missing after the previous prompts
-- Open files:
-  - `TaskItem.tsx`
-  - `TaskList.tsx`
-  - `App.tsx`
+- **Q1** Label changes between states, but what else should change? What does each button do when clicked?
+- **Q2** The subtitle shows "the task count", what should the full string say?
+- **Q3** What decorative detail is on the card that the description leaves out? Think about its shape.
+
+## Step 4: One valid filled-in prompt (debrief)
 
 ```text
-Fix the wiring across App.tsx, TaskList.tsx, and TaskItem.tsx only.
-Do not change any other file.
+Build the FocusModeCard component with two states - same layout, only the button changes.
 
-Fix 1 - Star/high-impact toggle (TaskItem.tsx):
-- Import Star icon from lucide-react
-- Add onToggleHighImpact: (id: number) => void to TaskItem props
-- Add star button between task text and delete button
-- opacity-0 by default, visible on group-hover
-- Filled yellow when isHighImpact is true; outlined grey otherwise
+When the user is not in focus view, the button should say 'View Insights' and take them to the insights view.
+When they are in focus view, it should say 'Back to Tasks' and return them to the task list.
 
-Fix 2 - Pass handler through (TaskList.tsx):
-- Add onToggleHighImpact to TaskListProps and pass it through to each TaskItem
+The card has a dark purple gradient background, a bold white 'Focus Mode' title, and a subtitle that reads '{count} high-impact tasks waiting'. It also has a decorative blurred circle in the bottom-right corner.
 
-Fix 3 - App state wiring (App.tsx):
-- Add toggleHighImpact function that toggles isHighImpact by task id
-- Pass onToggleHighImpact={toggleHighImpact} to TaskList
-- Render FocusModeCard on both Tasks and Focus views
-- Pass isInFocusView={currentView === 'Focus'}
-- Pass highImpactCount={tasks.filter(t => !t.completed && t.isHighImpact).length}
-- Keep onViewInsights switching to Focus and onBackToTasks switching back
+Use the existing Button component - don't create a new one. One component, one return statement, no duplicated layout.
 
-Output: updated App.tsx, TaskList.tsx, and TaskItem.tsx only.
+Wire this into App.tsx for full navigation behavior so I can see how it works
 ```
