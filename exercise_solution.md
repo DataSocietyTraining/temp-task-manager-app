@@ -243,7 +243,7 @@ patchTask()
 - Do not select the whole file.
 
 
-## Unconstrained prompt
+### Unconstrained prompt
 
 ```text
 Refactor this function.
@@ -259,7 +259,7 @@ Do not run tests or terminal commands.
 
 ---
 
-##  risks involved
+###  risks involved
 
 ```text
 Risks:
@@ -326,13 +326,13 @@ Do not run tests or terminal commands.
 
 ```
 
-## Expected implementation
+### Expected implementation
 
 ![Constrained screenshot](Demo-Exercise-screenshots/module3-exercise-task3-constrained-implementation.png)
 
 
 
-## After implementation
+### After implementation
 -  when tests are run 
   
 ![Constrained screenshot](Demo-Exercise-screenshots/module3-exercise-task3-constrained-implementation-out.png)
