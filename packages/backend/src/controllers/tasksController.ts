@@ -35,41 +35,42 @@ export function createTask(req: Request, res: Response): void {
 }
 
 export function patchTask(req: Request, res: Response): void {
-  const paramsResult = patchTaskParamsSchema.safeParse(req.params);
-  if (!paramsResult.success) {
+  const sendValidationError = (message: string, details: unknown): void => {
     res.status(400).json({
       error: 'validation_error',
-      message: 'Route parameter validation failed',
-      details: paramsResult.error.issues,
+      message,
+      details,
     });
-    return;
-  }
+  };
 
-  const bodyResult = patchTaskBodySchema.safeParse(req.body);
-  if (!bodyResult.success) {
-    res.status(400).json({
-      error: 'validation_error',
-      message: 'Request body validation failed',
-      details: bodyResult.error.issues,
-    });
-    return;
-  }
-
-  const updatedTask = updateTask(paramsResult.data.id, bodyResult.data);
-  if (!updatedTask) {
+  const sendNotFound = (): void => {
     res.status(404).json({
       error: 'not_found',
       message: 'Task not found',
     });
-    return;
+  };
+
+  const parsedParams = patchTaskParamsSchema.safeParse(req.params);
+  if (!parsedParams.success) {
+    return sendValidationError('Route parameter validation failed', parsedParams.error.issues);
   }
 
-  res.json(updatedTask);
+  const parsedBody = patchTaskBodySchema.safeParse(req.body);
+  if (!parsedBody.success) {
+    return sendValidationError('Request body validation failed', parsedBody.error.issues);
+  }
+
+  const { id: taskId } = parsedParams.data;
+  const updatedTask = updateTask(taskId, parsedBody.data);
+  if (!updatedTask) {
+    return sendNotFound();
+  }
+
+  res.status(200).json(updatedTask);
 }
 
 export function removeTask(req: Request, res: Response): void {
   const paramsResult = deleteTaskParamsSchema.safeParse(req.params);
-
   if (!paramsResult.success) {
     res.status(400).json({
       error: 'validation_error',
@@ -79,8 +80,8 @@ export function removeTask(req: Request, res: Response): void {
     return;
   }
 
-  const deleted = deleteTask(paramsResult.data.id);
-  if (!deleted) {
+  const wasDeleted = deleteTask(paramsResult.data.id);
+  if (!wasDeleted) {
     res.status(404).json({
       error: 'not_found',
       message: 'Task not found',
