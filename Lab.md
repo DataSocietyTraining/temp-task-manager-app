@@ -116,7 +116,7 @@ packages/tests/unit/taskSchemas.test.ts
 packages/backend/src/controllers/tasksController.ts
 packages/backend/src/app.ts
 ```
-![Red workspace screenshot](./Demo-Exercise-screenshots/module3-delete-red-tab-hygiene.png)
+
 
 ---
 
