@@ -1,129 +1,90 @@
-### Contract First Prompting and Chain of Thought - 1 ##
+## Prompt 1 — Red: Generate Failing DELETE Tests
 
-#=================================================-
-#### Slide 9/55: A Vague Prompt Leaves API Behavior Undefined  ####
+```text
 
-```
-Create a POST /tasks endpoint.
-```
+The contract and validation schema for DELETE /tasks/:id are defined.
 
-#=================================================-
-#### Slide 14/55: A Vague Prompt Leaves API Behavior Undefined  ####
+The handler is currently a stub that returns 501.
 
-```
-/**
- * POST /tasks
- * Creates a new task.
- *
- * @body text - Required task text.
- * @body description - Optional task details.
- * @body completed - Optional completion state.
- * @body isHighImpact - Optional focus marker.
- *
- * @returns 201 - Created task object.
- * @returns 400 - Validation error when the request body is invalid.
- */
-interface CreateTaskBody {
-  text: string;
-  description?: string;
-  completed?: boolean;
-  isHighImpact?: boolean;
-}
-```
+Generate tests that assert the documented behaviors. Tests must fail until the handler is implemented.
 
-#=================================================-
-#### Slide 17/55: Prompt used after contract  ####
+Cover exactly:
+
+  (1) Happy path: valid id returns 204 with no body
+
+  (2) 404: task id does not exist
+
+  (3) 400: id is not a valid format (for example, a string instead of a number)
+
+Name each test after the rule it enforces.
+
+Use Vitest + supertest.
+
+Do not run tests or terminal commands.
 
 ```
-Use the contract for POST /tasks as defined in the types/task.ts
 
-1. Generate a Zod validation schema derived directly from the interface.
-2. Implement the route handler. Parse and validate the request body using that schema.
-3. Map validation failure to this stable shape: { error: "validation_error", message: string, details: <validation detail> }
-4. On success, create the task and return 201 with the full task object.
+## Prompt 2 — Green: Implement DELETE Handler
 
-Do not add fields or behaviors not specified in the contract.
+```text
+
+Implement the DELETE /tasks/:id handler so every test above passes.
+
+Do not add behaviors, endpoints, or fields that the tests do not require.
+
+Validate the route parameter before any business logic runs.
+
+Keep validation aligned with the contract.
+
+Do not run tests or terminal commands.
 ```
 
-#=================================================-
-#### Slide 27/55: Delete Task: Write the Contract ####
+## Prompt 3 — Refactor: Safely Refactor DELETE Handler
 
-```
-/**
- * DELETE /tasks/:id
- * Removes a task permanently by its ID.
- *
- * @param {number} id - Task identifier. Coerced from the URL parameter.
- *
- * @returns {204} No content — task successfully deleted.
- * @returns {400} Validation error for malformed or invalid id.
- * @returns {404} Task not found for id.
- */
-export interface DeleteTaskParams {
-  id: number;
-}
+```text
+
+Refactor handler removeTask() for clarity only.
+
+For example, extract repeated validation error logic into a local helper in this same file.
+
+All tests must still pass with no changes to test expectations.
+
+Do not alter status codes, response body shapes, or validation rules.
+
+Do not move code to new files.
+
+Do not run tests or terminal commands.
 ```
 
-#=================================================-
-#### Slide 29/55: Delete Task: Write the Prompt  ####
+## Prompt 4 — Unconstrained Refactor: Weak DELETE Refactor Prompt
 
-```
-Use the contract for DELETE /tasks/:id defined in packages/backend/src/types/task.ts.
-Validate the route id using the app's id scheme.
-Use .safeParse on the route params.
-Return the correct status codes and response shapes as defined in the contract.
-Do not add fields or behaviors not specified in the contract.
+```text
+
+Refactor this function.
+
+Do not run tests or terminal commands.
 ```
 
-#=================================================-
-#### Slide 37/55: Run the Reasoning Prompt  ####
+## Prompt 5 — Constrained Refactor: Safe DELETE Refactor Prompt
 
-```
-- Before writing any code, reason through the PATCH /tasks/:id endpoint:
+```text
 
-  - What should happen if the request body is empty — no fields sent at all?
-  - What status code and error shape should that produce?
-  - What happens if the task ID does not exist?
-  - Are there any security concerns with allowing arbitrary field updates?
-  
-  Explain each case clearly. Do not write any implementation yet.
-```
+Refactor for readability only, inside this function.
 
-#=================================================-
-#### Slide 39/52: Run the Implementation Prompt  ####
+Do not rename the function or its parameters.
 
-```
-Now implement the handler using the reasoning above.
-The rule — reject empty bodies with 400 — must live in the validation schema,
-not just as a conditional check inside the handler logic.
-```
+Do not change the error messages or error types that callers rely on.
 
-#=================================================-
-#### Slide 45/55: Activity 2: Step 1 — Write the reasoning prompt  ####
+Do not remove validation checks of any kind.
 
-```
-Before writing any code, reason through GET /api/tasks.
+Do not extract helpers to new files — keep everything in this file.
 
-- What should the response look like when tasks exist?
-- What should happen when there are no tasks — is an empty list an error or a valid response?
-- What status code should always be returned on success?
-- Are there any concerns with returning the full task list to the client?
+All existing tests must still pass without any changes to test code.
 
-Do not write implementation code yet.
-```
+Do not run tests or terminal commands.
 
-#=================================================-
-#### Slide 47/55: Activity 2: Step 3 — Write the implementation prompt  ####
-
-```
-Using the approach you just described, implement GET /api/tasks.
-Return 200 with an array of task objects on success.
-If there are no tasks, return 200 with [].
-Do not create a validation schema for this route.
-Do not add fields or behaviors not in the existing task type.
 ```
 
 
-#######################################################
-####  CONGRATULATIONS ON COMPLETING THIS MODULE!   ####
-#######################################################
+
+

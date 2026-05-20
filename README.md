@@ -1,4 +1,20 @@
-# MODULE-2 -  Contract-First Prompting and Chain-of-Thought
+# MODULE-3 — Red/Green/Refactor and Constrained Refactoring
+
+**— The app used in this module**
+
+This module continues with **Methodical Tasks**, the same task manager app used throughout the course.
+
+Methodical Tasks has a React frontend and an Express backend. The app includes three views: **Tasks**, **Focus**, and **Archive**. In this module, the main work happens in the backend, where route handlers are implemented and safely refactored with Copilot.
+
+The backend uses **TypeScript**, **Express**, and **Zod** for validation. The focus of this module is not to generate large amounts of new code. The focus is to use Copilot carefully inside a controlled workflow:
+
+```text
+
+1. Red      → write failing tests first
+
+2. Green    → implement only what the tests require
+
+3. Refactor → improve clarity without changing behavior
 
 
 **— The app you are building**
