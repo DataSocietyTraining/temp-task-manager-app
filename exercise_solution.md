@@ -1,4 +1,4 @@
-# In-Class Exercise Solution
+## In-Class Exercise Solution
 
 This file provides sample answers for the exercise.
 
@@ -15,13 +15,13 @@ A correct answer should:
 
 ---
 
-# Task 3 — Red / Green / Refactor for `PATCH /tasks/:id`
+## Task 3 — Red / Green / Refactor for `PATCH /tasks/:id`
 
 
 
-# Task 3 Part A — Red Solution
+## Task 3 Part A — Red Solution
 
-## Set up the red tab hygiene
+### Set up the red tab hygiene
 
 - Let’s open the files Copilot needs to generate the implementation.
 
@@ -40,7 +40,7 @@ packages/backend/src/app.ts
 
 ```
 
-## red prompt
+### red prompt
 
 ```text
 The contract and validation schema for PATCH /tasks/:id are defined.
@@ -68,11 +68,11 @@ Do not run tests or terminal commands.
 
 ---
 
-## What a correct red step should produce
+### What a correct red step should produce
 
 - A correct red step should add tests similar to:
 
-![Red screenshot](./Demo-Exercise-screenshots/module3-exercise-task3-1.png)
+![Red screenshot](Demo-Exercise-screenshots/module3-exercise-task3-1.png)
 
 - The exact assertions may differ depending on the existing test style.
 
@@ -80,15 +80,15 @@ Do not run tests or terminal commands.
 
 ---
 
-## When the test are run
+### When the test are run
 
 - All tests for PATCH should fail
 
-![Red screenshot](./Demo-Exercise-screenshots/module3-exercise-task3-1-out.png)
+![Red screenshot](Demo-Exercise-screenshots/module3-exercise-task3-1-out.png)
 
-# Task 3 Part B — Green Solution
+## Task 3 Part B — Green Solution
 
-##  Set up the green tab hygiene
+###  Set up the green tab hygiene
 
 - Open the files Copilot needs to generate the implementation.
 
@@ -112,7 +112,7 @@ packages/backend/src/app.ts
 packages/backend/src/controllers/tasksController.ts
 ```
 
-## Green prompt
+### Green prompt
 
 ```text
 Implement the PATCH /tasks/:id handler so every test above passes.
@@ -134,26 +134,26 @@ Do not run tests or terminal commands.
 
 ---
 
-## Expected green implementation
+### Expected green implementation
 
-![Green screenshot](./Demo-Exercise-screenshots/module3-exercise-task3-green-implementation.png)
+![Green screenshot](Demo-Exercise-screenshots/module3-exercise-task3-green-implementation.png)
 
 
 ---
 
-## After implementing green 
+### After implementing green 
 -  when tests are run 
   
-![Green screenshot](./Demo-Exercise-screenshots/module3-exercise-task3-green-implementation-out.png)
+![Green screenshot](Demo-Exercise-screenshots/module3-exercise-task3-green-implementation-out.png)
 
 
 
 
 ---
 
-# Task 3 Part C — Refactor Solution
+## Task 3 Part C — Refactor Solution
 
-# Step 1: Set up the refactor tab hygiene
+### Step 1: Set up the refactor tab hygiene
 
 - Let’s open the files Copilot needs to generate the implementation.
 
@@ -181,7 +181,7 @@ packages/backend/src/controllers/tasksController.ts
 
 
 
-## Sample refactor prompt
+### Sample refactor prompt
 
 ```text
 Refactor handler patchTask() for clarity only.
@@ -201,24 +201,24 @@ Do not run tests or terminal commands.
 
 ---
 
-## Acceptable refactor example
+### Acceptable refactor example
 
 - This is acceptable because it improves naming slightly without changing behavior:
 
-![Refactor screenshot](./Demo-Exercise-screenshots/module3-exercise-task3-refactor-implementation.png)
+![Refactor screenshot](Demo-Exercise-screenshots/module3-exercise-task3-refactor-implementation.png)
 
 
 
-## After implementing refactor 
+### After implementing refactor 
 -  when tests are run 
   
-![Refactor screenshot](./Demo-Exercise-screenshots/module3-exercise-task3-refactor-implementation-out.png)
+![Refactor screenshot](Demo-Exercise-screenshots/module3-exercise-task3-refactor-implementation-out.png)
 
 ---
 
 
 
-# Task 4 — Constrained Refactoring
+## Task 4 — Constrained Refactoring
 
 ---
 
@@ -253,7 +253,7 @@ Do not run tests or terminal commands.
 
 ## Expected implementation
 
-![Unconstrained screenshot](./Demo-Exercise-screenshots/module3-exercise-task3-unconstrained-implementation.png)
+![Unconstrained screenshot](Demo-Exercise-screenshots/module3-exercise-task3-unconstrained-implementation.png)
 
 
 
@@ -301,7 +301,7 @@ packages/backend/src/app.ts
 packages/backend/src/routes/tasksRoutes.ts
 ```
 
-## constrained prompt
+### constrained prompt
 
 ```text
 Refactor for readability only, inside patchTask().
@@ -328,14 +328,14 @@ Do not run tests or terminal commands.
 
 ## Expected implementation
 
-![Constrained screenshot](./Demo-Exercise-screenshots/module3-exercise-task3-constrained-implementation.png)
+![Constrained screenshot](Demo-Exercise-screenshots/module3-exercise-task3-constrained-implementation.png)
 
 
 
 ## After implementation
 -  when tests are run 
   
-![Constrained screenshot](./Demo-Exercise-screenshots/module3-exercise-task3-constrained-implementation-out.png)
+![Constrained screenshot](Demo-Exercise-screenshots/module3-exercise-task3-constrained-implementation-out.png)
 
 ---
 
