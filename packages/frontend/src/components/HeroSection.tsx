@@ -1,4 +1,6 @@
+
 import React from 'react'
+import { theme } from '../theme'
 
 type View = 'Tasks' | 'Focus' | 'Archive'
 
@@ -37,8 +39,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
   return (
     <div className="text-center mb-10">
-      <h1 className="text-5xl font-bold text-[#2c125b] mb-2">{title}</h1>
-      <p className="text-[#494550] text-base font-medium opacity-70">{subtitle}</p>
+      <h1
+        className="text-5xl font-bold mb-2"
+        style={{ color: theme.colors.heroHeading }}
+      >
+        {title}
+      </h1>
+      <p
+        className="text-base font-medium opacity-70"
+        style={{ color: theme.colors.heroSubtitle }}
+      >
+        {subtitle}
+      </p>
     </div>
   )
 }
