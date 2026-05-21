@@ -107,39 +107,6 @@ Without a scope limit, Copilot may edit `App.tsx`, change route handling, add ne
 
 The prompt should require Copilot to **state assumptions in code comments** rather than invent details silently. This converts a hidden guess into a visible one, which is reviewable.
 
-### The tighter screenshot prompt - what it adds
-
-```text
-I am attaching a **screenshot** that is the visual source of truth. Generate React + TypeScript + Tailwind to match it.
-
-Goal:
-Recreate the UI so a side-by-side comparison with the screenshot shows **no intentional layout drift**.
-
-Design constraints (from what is visible in the image):
-- Match column widths, alignment, and vertical rhythm shown in the screenshot
-- Match colors using exact-looking Tailwind classes or arbitrary values **only** where you can justify them from pixels in the image (state how you sampled them, e.g. browser eyedropper / design handoff)
-- If the screenshot is ambiguous (cropped, low resolution), **state assumptions explicitly** in comments instead of inventing details
-
-Component structure:
-- Break into TaskInput, TaskItem, TaskList (or names that match what is shown)
-- Do not duplicate code
-- Keep components minimal and reusable
-
-TypeScript:
-- Explicit prop interfaces
-- Do not use `any`
-
-Styling:
-- Tailwind CSS
-- Prefer mapping repeated values to small local constants or a minimal theme object when the same numbers repeat
-
-Behavior:
-- No API calls unless the screenshot shows integration points and you are told to stub them
-
-Output:
-- Complete working code
-- Prioritize visual fidelity over abstraction
-```
 
 ### What changed between the two prompts
 
