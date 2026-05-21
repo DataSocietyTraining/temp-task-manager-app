@@ -4,7 +4,9 @@
 
 This guide contains the demo walkthroughs and the activity instructions for Module 4. Follow each demo alongside the instructor in VS Code. Refer to this document during the session whenever you need to revisit a prompt, a tab list, or a check.
 
-> LLM outputs are non-deterministic - your outputs may differ from what the instructor or this guide shows. Treat the references here as expected behavior, not as exact matches.
+> *LLM outputs are non-deterministic - your outputs may differ from what the instructor or this guide shows. Treat the references here as expected behavior, not as exact matches.*
+
+> **Note for learners**: The front-end for subsequent modules may start from a template that differs from the Module 3 end state. This is intentional and designed to support each module's learning objectives.
 
 ---
 
