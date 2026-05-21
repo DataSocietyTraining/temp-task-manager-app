@@ -247,9 +247,43 @@ This prompt gives Copilot a visual source, but it intentionally leaves some deta
 
 Screenshot reduces ambiguity, but does not eliminate it.
 
-### Tighter version (optional second pass)
+### Tighter version (second pass)
 
 A stricter screenshot prompt defines what *matching* means, tells Copilot how to handle ambiguity, limits unrelated file edits, and preserves component boundaries and TypeScript contracts. The visible change between passes may be small - the important improvement is reliability.
+
+### The tighter screenshot prompt - what it adds
+
+```text
+I am attaching a **screenshot** that is the visual source of truth. Generate React + TypeScript + Tailwind to match it.
+
+Goal:
+Recreate the UI so a side-by-side comparison with the screenshot shows **no intentional layout drift**.
+
+Design constraints (from what is visible in the image):
+- Match column widths, alignment, and vertical rhythm shown in the screenshot
+- Match colors using exact-looking Tailwind classes or arbitrary values **only** where you can justify them from pixels in the image (state how you sampled them, e.g. browser eyedropper / design handoff)
+- If the screenshot is ambiguous (cropped, low resolution), **state assumptions explicitly** in comments instead of inventing details
+
+Component structure:
+- Break into TaskInput, TaskItem, TaskList (or names that match what is shown)
+- Do not duplicate code
+- Keep components minimal and reusable
+
+TypeScript:
+- Explicit prop interfaces
+- Do not use `any`
+
+Styling:
+- Tailwind CSS
+- Prefer mapping repeated values to small local constants or a minimal theme object when the same numbers repeat
+
+Behavior:
+- No API calls unless the screenshot shows integration points and you are told to stub them
+
+Output:
+- Complete working code
+- Prioritize visual fidelity over abstraction
+```
 
 ---
 
@@ -260,7 +294,7 @@ A stricter screenshot prompt defines what *matching* means, tells Copilot how to
 ### What to compare
 
 - The screenshot prompt from Demo 3 (above)
-- A tighter version of the same prompt that adds review criteria, ambiguity handling, and scope limits
+- A tighter version of the same prompt above that adds review criteria, ambiguity handling, and scope limits
 
 ### Answer these questions
 
