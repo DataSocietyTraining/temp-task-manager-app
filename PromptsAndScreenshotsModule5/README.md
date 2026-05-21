@@ -58,7 +58,7 @@ Demo: Vague prompt with Figma link
 - In Copilot Chat (Agent mode):
 
 ```text
-https://www.figma.com/design/FFPdwRiIoEa5NV3XupRlXV/Full-Stack-IQVIA-course?node-id=7-708&t=Q4sUeZxh1dO2Xopf-1<FIGMA LINK>
+<FIGMA LINK>
 
 Recreate the Figma design exactly in React + Tailwind CSS.
 Match spacing, font sizes, and colors precisely.
