@@ -1,32 +1,39 @@
-import { useState } from 'react'
-import { Header, TaskInput, TaskList } from './components'
+
+import React, { useState } from 'react'
+import { FocusModeCard } from './components/FocusModeCard'
+import { TaskInput } from './components/TaskInput'
+import { TaskList } from './components/TaskList'
 import type { Task } from './types/task'
 
 type View = 'Tasks' | 'Focus' | 'Archive'
 
-function App() {
-  const [tasks, setTasks] = useState<Task[]>([])
+export default function App() {
+  const [tasks, setTasks] = useState<Task[]>([
+    { id: 1, text: 'Review quarterly design guidelines', completed: false, isHighImpact: true },
+    { id: 2, text: 'Prepare editorial bento layout assets', completed: false, isHighImpact: true },
+    { id: 3, text: 'Check typographic scales for accessibility', completed: true, isHighImpact: false },
+    { id: 4, text: 'Morning focus session: Tonal depth study', completed: true, isHighImpact: false }
+  ])
   const [input, setInput] = useState('')
-  const [details, setDetails] = useState('')
   const [currentView, setCurrentView] = useState<View>('Tasks')
 
-  const addTask = () => {
+  const handleAddTask = () => {
     const trimmed = input.trim()
     if (!trimmed) return
 
-    const newTask: Task = {
-      id: Date.now(),
-      text: trimmed,
-      completed: false,
-      isHighImpact: false
-    }
-
-    setTasks((prev) => [...prev, newTask])
+    setTasks((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        text: trimmed,
+        completed: false,
+        isHighImpact: false
+      }
+    ])
     setInput('')
-    setDetails('')
   }
 
-  const toggleTask = (id: number) => {
+  const handleToggleTask = (id: number) => {
     setTasks((prev) =>
       prev.map((task) =>
         task.id === id ? { ...task, completed: !task.completed } : task
@@ -34,110 +41,95 @@ function App() {
     )
   }
 
-  const deleteTask = (id: number) => {
+  const handleDeleteTask = (id: number) => {
     setTasks((prev) => prev.filter((task) => task.id !== id))
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      addTask()
+      handleAddTask()
     }
   }
 
-  const getViewTitle = () => {
-    switch (currentView) {
-      case 'Focus':
-        return 'Focus Mode'
-      case 'Archive':
-        return 'Archived'
-      default:
-        return 'My Day'
-    }
-  }
+  const visibleTasks = currentView === 'Archive'
+    ? tasks.filter((task) => task.completed)
+    : tasks
 
-  const getViewSubtitle = () => {
-    switch (currentView) {
-      case 'Focus':
-        return 'High-impact tasks only.'
-      case 'Archive':
-        return 'Completed and archived tasks.'
-      default:
-        return 'Focus on what matters most.'
-    }
-  }
-
-  const filteredTasks = (() => {
-    switch (currentView) {
-      case 'Focus':
-        return tasks.filter((t) => !t.completed && t.isHighImpact)
-      case 'Archive':
-        return tasks.filter((t) => t.completed)
-      default:
-        return tasks.filter((t) => !t.completed)
-    }
-  })()
+  const highImpactWaitingCount = tasks.filter((task) => task.isHighImpact && !task.completed).length
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <Header currentView={currentView} onChangeView={setCurrentView} />
-
-      <main className="mx-auto w-full max-w-2xl px-4 py-10">
-        {/* Hero Section */}
-        <div className="mb-10 text-center">
-          <h1 className="text-5xl font-bold text-slate-900">{getViewTitle()}</h1>
-          <p className="mt-3 text-lg text-slate-500">{getViewSubtitle()}</p>
+    <div className="min-h-screen bg-[#F8F9FA] flex flex-col items-center">
+      {/* Header */}
+      <header className="w-full flex items-center justify-between px-[72px] py-6 border-b border-[#ECECEC] max-w-[1440px] mx-auto">
+        <div className="text-xl font-semibold text-[#6C3DF4] tracking-tight select-none" style={{ fontFamily: 'Inter, sans-serif' }}>
+          Methodical Tasks
         </div>
+        <nav className="flex gap-8">
+          <button
+            onClick={() => setCurrentView('Tasks')}
+            className={`relative font-medium text-base pb-1 focus:outline-none ${currentView === 'Tasks' ? 'text-[#6C3DF4]' : 'text-[#B0B0B0]'}`}
+            style={{ fontFamily: 'Inter, sans-serif' }}
+          >
+            Tasks
+            {currentView === 'Tasks' && <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-[#6C3DF4] rounded"></span>}
+          </button>
+          <button
+            onClick={() => setCurrentView('Focus')}
+            className={`relative font-medium text-base pb-1 focus:outline-none ${currentView === 'Focus' ? 'text-[#6C3DF4]' : 'text-[#B0B0B0]'}`}
+            style={{ fontFamily: 'Inter, sans-serif' }}
+          >
+            Focus
+            {currentView === 'Focus' && <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-[#6C3DF4] rounded"></span>}
+          </button>
+          <button
+            onClick={() => setCurrentView('Archive')}
+            className={`relative font-medium text-base pb-1 focus:outline-none ${currentView === 'Archive' ? 'text-[#6C3DF4]' : 'text-[#B0B0B0]'}`}
+            style={{ fontFamily: 'Inter, sans-serif' }}
+          >
+            Archive
+            {currentView === 'Archive' && <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-[#6C3DF4] rounded"></span>}
+          </button>
+        </nav>
+        <div className="flex items-center gap-4">
+          <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#F0F0F0]">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#6C3DF4" strokeWidth="2">
+              <circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/>
+            </svg>
+          </button>
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User avatar" className="w-9 h-9 rounded-full border-2 border-[#ECECEC] object-cover" />
+        </div>
+      </header>
 
-        {/* Task Input Form */}
+      {/* Main Content */}
+      <main className="flex flex-col items-center flex-1 py-8 w-full">
+        <h1 className="text-5xl font-extrabold text-[#3B176B] mt-6 mb-2 tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
+          {currentView === 'Focus' ? 'Focus Mode' : currentView === 'Archive' ? 'Archive' : 'My Day'}
+        </h1>
+        <p className="text-[#7C7C7C] text-lg mb-8" style={{ fontFamily: 'Inter, sans-serif' }}>
+          {currentView === 'Focus' ? 'Deep work with high-impact priorities.' : currentView === 'Archive' ? 'Completed tasks, methodically tracked.' : 'Focus on what matters most.'}
+        </p>
         {currentView !== 'Archive' && (
-          <div className="mb-10 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="space-y-4">
-              <div className="flex gap-3">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Add a methodical task..."
-                  className="h-12 flex-1 rounded-lg border border-slate-300 bg-slate-50 px-4 text-slate-900 placeholder-slate-400 focus:border-slate-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-400"
-                />
-                <button
-                  type="button"
-                  onClick={addTask}
-                  className="inline-flex h-12 items-center gap-2 rounded-lg bg-red-600 px-6 text-white font-semibold hover:bg-red-700 transition"
-                >
-                  <span>+</span>
-                  Add
-                </button>
-              </div>
-
-              {/* Details Section */}
-              <details className="group">
-                <summary className="cursor-pointer select-none text-sm font-semibold text-slate-700 uppercase tracking-wider">
-                  Details <span className="text-slate-400">(optional)</span>
-                </summary>
-                <textarea
-                  value={details}
-                  onChange={(e) => setDetails(e.target.value)}
-                  placeholder="Add context, links, or sub-steps..."
-                  className="mt-3 w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-slate-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-400"
-                  rows={4}
-                />
-              </details>
-            </div>
-          </div>
+          <TaskInput
+            value={input}
+            onChange={setInput}
+            onKeyDown={handleInputKeyDown}
+            onAddClick={handleAddTask}
+          />
         )}
-
-        {/* Task List */}
         <TaskList
-          tasks={filteredTasks}
-          onToggle={toggleTask}
-          onDelete={deleteTask}
-          isEmpty={filteredTasks.length === 0}
+          tasks={visibleTasks}
+          onToggle={handleToggleTask}
+          onDelete={handleDeleteTask}
         />
+        <div className="w-full max-w-[544px] mt-2">
+          <FocusModeCard
+            highImpactCount={highImpactWaitingCount}
+            isInFocusView={currentView === 'Focus'}
+            onViewInsights={() => setCurrentView('Focus')}
+            onBackToTasks={() => setCurrentView('Tasks')}
+          />
+        </div>
       </main>
     </div>
   )
 }
-
-export default App

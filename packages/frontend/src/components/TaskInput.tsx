@@ -1,3 +1,4 @@
+
 import React from 'react'
 
 interface TaskInputProps {
@@ -13,27 +14,25 @@ export const TaskInput: React.FC<TaskInputProps> = ({
   onChange,
   onKeyDown,
   onAddClick,
-  placeholder = 'Add a task...'
-}) => {
-  return (
-    <div className="mb-6">
-      <div className="flex gap-3">
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onKeyDown={onKeyDown}
-          placeholder={placeholder}
-          className="h-12 w-full flex-1 rounded-lg border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-        />
-        <button
-          type="button"
-          onClick={onAddClick}
-          className="inline-flex h-12 items-center rounded-lg bg-indigo-600 px-5 text-sm font-semibold text-white transition hover:bg-indigo-700"
-        >
-          Add
-        </button>
-      </div>
-    </div>
-  )
-}
+  placeholder = 'Add a methodical task...'
+}) => (
+  <div className="flex w-full max-w-[544px] gap-4 mb-6">
+    <input
+      type="text"
+      value={value}
+      onChange={e => onChange(e.target.value)}
+      onKeyDown={onKeyDown}
+      placeholder={placeholder}
+      className="flex-1 rounded-xl bg-[#E9E9E9] px-6 py-3 text-base text-[#7C7C7C] placeholder-[#B0B0B0] outline-none focus:ring-2 focus:ring-[#6C3DF4]"
+      style={{ fontFamily: 'Inter, sans-serif' }} // Figma font
+    />
+    <button
+      type="button"
+      onClick={onAddClick}
+      className="bg-[#F4431D] hover:bg-[#d63a18] text-white font-semibold rounded-xl px-7 py-3 text-base transition-colors"
+      style={{ fontFamily: 'Inter, sans-serif' }}
+    >
+      + Add
+    </button>
+  </div>
+)

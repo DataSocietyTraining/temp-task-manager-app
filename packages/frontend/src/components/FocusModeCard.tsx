@@ -16,25 +16,24 @@ export const FocusModeCard: React.FC<FocusModeCardProps> = ({
 }) => {
   return (
     <div
-      className="relative overflow-hidden rounded-xl p-8 text-white"
+      className="relative overflow-hidden rounded-[18px] p-8 text-white"
       style={{
-        background: 'linear-gradient(155deg, rgb(38, 17, 68) 0%, rgb(66, 43, 114) 100%)'
+        background: 'linear-gradient(155deg, #2B1452 0%, #3A1E6E 100%)'
       }}
     >
       {/* Decorative circle */}
-      <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-[rgba(44,18,91,0.2)] rounded-full blur-[32px]" />
+      <div className="absolute -bottom-14 -right-14 h-52 w-52 rounded-full bg-[rgba(75,41,130,0.45)] blur-[36px]" />
 
       {/* Content */}
       <div className="relative z-10">
-        <h3 className="text-xl font-bold mb-3">Focus Mode</h3>
-        <p className="text-sm font-normal text-[#af96e5] mb-8 max-w-xs leading-relaxed">
-          Deep work session active. Prioritizing
-          <br />
-          {highImpactCount} high-impact task{highImpactCount !== 1 ? 's' : ''}.
+        <h3 className="mb-3 text-[44px] font-bold leading-[1.05] tracking-[-0.01em] text-white">Focus Mode</h3>
+        <p className="mb-12 max-w-md text-[40px] font-medium leading-[1.2] text-[#B4A1E6]">
+          {highImpactCount} high-impact task{highImpactCount !== 1 ? 's' : ''} waiting
         </p>
         <Button
           variant="tertiary"
-          size="sm"
+          size="md"
+          className="h-14 rounded-[18px] px-10 text-[40px] font-bold leading-none text-[#674285] bg-[#CF9DF7] hover:bg-[#C993F4]"
           onClick={isInFocusView ? onBackToTasks : onViewInsights}
         >
           {isInFocusView ? 'Back to Tasks' : 'View Insights'}

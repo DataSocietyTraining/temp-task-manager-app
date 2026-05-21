@@ -1,30 +1,19 @@
-import React from 'react'
-import { TaskItem } from './TaskItem'
 
-interface Task {
-  id: number
-  text: string
-  completed: boolean
-  isHighImpact: boolean
-}
+
+import React from 'react'
+import type { Task } from '../types/task'
+import { TaskItem } from './TaskItem'
 
 interface TaskListProps {
   tasks: Task[]
   onToggle: (id: number) => void
   onDelete: (id: number) => void
-  isEmpty: boolean
 }
 
-export const TaskList: React.FC<TaskListProps> = ({ tasks, onToggle, onDelete, isEmpty }) => {
-  return (
-    <div className="space-y-3">
-      {isEmpty ? (
-        <p className="py-12 text-center text-slate-500">
-          No tasks yet. Add one to get started!
-        </p>
-      ) : (
-        tasks.map((task) => <TaskItem key={task.id} task={task} onToggle={onToggle} onDelete={onDelete} />)
-      )}
-    </div>
-  )
-}
+export const TaskList: React.FC<TaskListProps> = ({ tasks, onToggle, onDelete }) => (
+  <div className="w-full max-w-[544px] flex flex-col gap-2 mb-10">
+    {tasks.map(task => (
+      <TaskItem key={task.id} task={task} onToggle={onToggle} onDelete={onDelete} />
+    ))}
+  </div>
+)
