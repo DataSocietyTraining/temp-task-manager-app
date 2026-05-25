@@ -1,13 +1,13 @@
 ### Contract First Prompting and Chain of Thought - 1 ##
 
-#=================================================-
+
 #### Slide 9/55: A Vague Prompt Leaves API Behavior Undefined  ####
 
 ```
 Create a POST /tasks endpoint.
 ```
 
-#=================================================-
+
 #### Slide 14/55: A Vague Prompt Leaves API Behavior Undefined  ####
 
 ```
@@ -31,7 +31,6 @@ interface CreateTaskBody {
 }
 ```
 
-#=================================================-
 #### Slide 17/55: Prompt used after contract  ####
 
 ```
@@ -75,7 +74,7 @@ Return the correct status codes and response shapes as defined in the contract.
 Do not add fields or behaviors not specified in the contract.
 ```
 
-#=================================================-
+
 #### Slide 37/55: Run the Reasoning Prompt  ####
 
 ```
@@ -89,7 +88,7 @@ Do not add fields or behaviors not specified in the contract.
   Explain each case clearly. Do not write any implementation yet.
 ```
 
-#=================================================-
+
 #### Slide 39/52: Run the Implementation Prompt  ####
 
 ```
@@ -98,7 +97,7 @@ The rule — reject empty bodies with 400 — must live in the validation schema
 not just as a conditional check inside the handler logic.
 ```
 
-#=================================================-
+
 #### Slide 45/55: Activity 2: Step 1 — Write the reasoning prompt  ####
 
 ```
@@ -112,7 +111,7 @@ Before writing any code, reason through GET /api/tasks.
 Do not write implementation code yet.
 ```
 
-#=================================================-
+
 #### Slide 47/55: Activity 2: Step 3 — Write the implementation prompt  ####
 
 ```
@@ -123,7 +122,3 @@ Do not create a validation schema for this route.
 Do not add fields or behaviors not in the existing task type.
 ```
 
-
-#######################################################
-####  CONGRATULATIONS ON COMPLETING THIS MODULE!   ####
-#######################################################
