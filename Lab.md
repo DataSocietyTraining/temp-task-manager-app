@@ -85,6 +85,7 @@ packages/backend/src/schemas/task.ts
 packages/backend/src/controllers/tasksController.ts
 packages/backend/src/routes/tasksRoutes.ts
 ```
+- Active tab: packages/backend/src/schemas/task.ts
 
 ### Step 2: Keep unrelated files closed
 
@@ -102,7 +103,7 @@ packages/backend/src/middleware/
 - `tasksController.ts` is where the route behavior should live.
 - `tasksRoutes.ts` is where the route should be wired.
 
-- Active tab: `schemas/task.ts`
+
 
 Open files provide signal. Closed files reduce unrelated edits and architectural drift.
 
@@ -249,7 +250,8 @@ export interface DeleteTaskParams {
 packages/backend/src/types/task.ts
 packages/backend/src/schemas/task.ts
 ```
-
+- Active tab: packages/backend/src/schemas/task.ts
+  
 ### Keep these files closed
 
 ```text
