@@ -1,4 +1,4 @@
-# Contract-First Prompting and Chain-of-Thought 1
+# Module - Contract-First Prompting and Chain-of-Thought 1
 
 This lab walks through two prompting habits for backend API work:
 

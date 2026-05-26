@@ -1,4 +1,4 @@
-## In-Class Exercise Solution
+## In-Class Exercise Solution - Contract-First Prompting and Chain-of-Thought 1
 
 This file provides sample answers for the exercise.
 
