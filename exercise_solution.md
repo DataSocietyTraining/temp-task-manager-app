@@ -85,6 +85,8 @@ In `packages/backend/src/controllers/tasksController.ts`, the generated handler 
 - delete the task when found
 - return `204` with no body on success
 
+![Handler screenshot](./Demo-Exercise-screenshots/delete-task-controller.png)
+
 #### Route wiring
 
 In `packages/backend/src/routes/tasksRoutes.ts`, the generated route should:
@@ -92,6 +94,9 @@ In `packages/backend/src/routes/tasksRoutes.ts`, the generated route should:
 - import the delete handler
 - connect `DELETE /:id` to that handler
 - keep route wiring separate from controller logic
+
+![Router screenshot](./Demo-Exercise-screenshots/delete-task-router.png)
+
 
 #### Supporting schema
 
@@ -194,6 +199,8 @@ In `packages/backend/src/controllers/tasksController.ts`, the handler should:
 - treat an empty list as a valid success case
 - avoid generating a validation schema for this route
 
+![Handler screenshot](./Demo-Exercise-screenshots/get-tasks-output.png)
+
 #### Route wiring
 
 In `packages/backend/src/routes/tasksRoutes.ts`, the route should:
@@ -201,5 +208,7 @@ In `packages/backend/src/routes/tasksRoutes.ts`, the route should:
 - import the list-tasks handler
 - connect `GET /` to that handler
 - keep route wiring separate from handler logic
+
+![Router screenshot](./Demo-Exercise-screenshots/get-tasks-output2.png)
 
 ---
