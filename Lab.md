@@ -376,9 +376,9 @@ Before writing any code, reason through GET /api/tasks.
 Do not write implementation code yet.
 
 ```
-2. Review the reasoning
-3. write the implementation prompt using the above reasoning
-4. Check for the handler and the route for `GET /api/tasks`
+- 2. Review the reasoning
+- 3. write the implementation prompt using the above reasoning
+- 4. Check for the handler and the route for `GET /api/tasks`
 
 ---
 
