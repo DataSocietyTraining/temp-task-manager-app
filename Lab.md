@@ -199,7 +199,9 @@ POST /api/tasks
 
 - This activity follows the same contract-first workflow from the `POST /tasks` demo.
 
-- 1. Complete the following contract 
+- In this activity, your goal is to define the route behavior before Copilot writes the implementation.
+
+- 1. Complete the following contract. Read the route description carefully and fill in the missing return codes before moving to any implementation files.
 
 ```text
 /**
@@ -215,9 +217,11 @@ export interface DeleteTaskParams {
 }
 ```
 
-- 2. Now Set up your tabs 
-- 3. Write the implementation prompt in Copilot Chat
-- 4. Check for the handler and the route for `DELETE /tasks/:id`
+- 2. Open only the files Copilot needs for this task and keep unrelated files closed so the model stays focused on the contract, the handler target, and the route wiring.
+
+- 3. Write the implementation prompt in Copilot Chat. The prompt should tell Copilot to use the contract as the source of truth, validate the route id before delete logic runs, and avoid inventing extra behavior.
+
+- 4. Check the generated handler and route for DELETE /tasks/:id. 
 
 
 ---
@@ -361,7 +365,7 @@ Apply the same reasoning-first workflow to the task-list route.
 
 - This route has no request body and no required parameters, but it still has an edge case worth reasoning through first.
 
-- 1. Complete the following reasoning prompt similar to the one covered in demo 2
+1. Complete the following reasoning prompt by filling in the missing parts, so the prompt asks Copilot to reason about normal success, the empty-list case, the correct success status code, and any response exposure concerns before any code is generated.
 
 ```text
 Before writing any code, reason through GET /api/tasks.
@@ -376,12 +380,15 @@ Before writing any code, reason through GET /api/tasks.
 Do not write implementation code yet.
 
 ```
-- 2. Review the reasoning
-- 3. write the implementation prompt using the above reasoning
-- 4. Check for the handler and the route for `GET /api/tasks`
+- 2. Review the reasoning carefully and confirm that the route behavior treats an empty task list as a valid success case instead of an error case.
+
+- 3. Write the implementation prompt using the accepted reasoning so the generated code stays aligned with the expected response shape, status code, and route behavior.
+
+- 4. Check the generated handler and route for GET /api/tasks and confirm that the handler returns the task list correctly while the route wiring connects the correct GET endpoint.
+
+
 
 ---
-
 
 
 
