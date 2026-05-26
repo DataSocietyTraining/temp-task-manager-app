@@ -1,4 +1,4 @@
-# Contract-First Prompting and Chain-of-Thought 1
+# Module - Contract-First Prompting and Chain-of-Thought 1
 
 This lab walks through two prompting habits for backend API work:
 
@@ -85,6 +85,7 @@ packages/backend/src/schemas/task.ts
 packages/backend/src/controllers/tasksController.ts
 packages/backend/src/routes/tasksRoutes.ts
 ```
+- Active tab: packages/backend/src/schemas/task.ts
 
 ### Step 2: Keep unrelated files closed
 
@@ -101,6 +102,8 @@ packages/backend/src/middleware/
 - `schemas/task.ts` is where request validation should live.
 - `tasksController.ts` is where the route behavior should live.
 - `tasksRoutes.ts` is where the route should be wired.
+
+
 
 Open files provide signal. Closed files reduce unrelated edits and architectural drift.
 
@@ -194,34 +197,9 @@ POST /api/tasks
 
 # Activity 1 — Contract-First Prompting for `DELETE /tasks/:id`
 
-This activity follows the same contract-first workflow from the `POST /tasks` demo.
+- This activity follows the same contract-first workflow from the `POST /tasks` demo.
 
-The route must support exactly three outcomes:
-
-- `400` when the id is malformed or fails validation
-- `404` when the id is valid but no task exists
-- `204` with no body when the task is deleted successfully
-
-## Activity overview
-
-- A client sends a request to remove a task permanently by id.
-- The id comes from the URL parameter.
-- Validate the id before touching the store.
-- Return `204` with no body on success.
-
----
-
-## Part 1 — Write the contract
-
-### Step 1: Open only the contract file first
-
-```text
-packages/backend/src/types/task.ts
-```
-
-### Step 2: Fill in the contract
-
-Use this as your starting point:
+- 1. Complete the following contract 
 
 ```text
 /**
@@ -237,17 +215,22 @@ export interface DeleteTaskParams {
 }
 ```
 
+- 2. Now Set up your tabs 
+- 3. Write the implementation prompt in Copilot Chat
+- 4. Check for the handler and the route for `DELETE /tasks/:id`
+
+---
 ---
 
 
 # Demo 2 — Chain-of-Thought for `PATCH /tasks/:id`
 
-This demo adds a reasoning checkpoint before implementation.
+- This demo adds a reasoning checkpoint before implementation.
 
-The key business rule is easy to miss:
+- The key business rule is easy to miss:
 
-- each PATCH field is optional
-- but the request body as a whole cannot be empty
+  - each PATCH field is optional
+  - but the request body as a whole cannot be empty
 
 ## Demo overview
 
@@ -267,7 +250,8 @@ The key business rule is easy to miss:
 packages/backend/src/types/task.ts
 packages/backend/src/schemas/task.ts
 ```
-
+- Active tab: packages/backend/src/schemas/task.ts
+  
 ### Keep these files closed
 
 ```text
@@ -377,38 +361,29 @@ Apply the same reasoning-first workflow to the task-list route.
 
 This route has no request body and no required parameters, but it still has an edge case worth reasoning through first.
 
-## Activity overview
+- 1. Complete the following reasoning prompt similar to the one covered in demo 2
 
-- The route should return the full list of tasks.
-- If tasks exist, return them.
-- If no tasks exist, that is still a successful read.
-- The response shape should stay consistent.
+```text
+Before writing any code, reason through GET /api/tasks.
 
----
+- What should the response look like when tasks exist?
+- What should happen when there are ______?
+                               // think about empty collections — is that an error?
+- What status code should always be returned on success?
+- Are there any concerns with ______?
+                    // think about what you are exposing to the client
 
-# Review Checklist
+Do not write implementation code yet.
 
-Use this checklist across the whole module before accepting Copilot output:
-
-- The contract is written before implementation prompts are sent.
-- Open tabs match the current phase of work.
-- Validation rules live in schemas when they belong at the boundary.
-- Handlers validate before acting.
-- Route files stay thin and mechanical.
-- Status codes match the contract.
-- Error shapes stay stable.
-- Empty collections are not treated as errors for `GET /api/tasks`.
-- Empty request bodies are rejected for `PATCH /tasks/:id`.
+```
+2. Review the reasoning
+3. write the implementation prompt using the above reasoning
+4. Check for the handler and the route for `GET /api/tasks`
 
 ---
 
-# Manual Verification
 
-After generating code for a route, manually verify:
 
-- the schema matches the contract
-- the handler order is correct
-- the route wiring matches the intended endpoint
-- no extra fields or behaviors were added
 
-For this module, the primary proof step is review against the contract and the reasoning. The next module will turn these rules into tests.
+
+
