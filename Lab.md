@@ -219,7 +219,7 @@ export interface DeleteTaskParams {
 - 3. Write the implementation prompt in Copilot Chat
 - 4. Check for the handler and the route for `DELETE /tasks/:id`
 
----
+
 ---
 
 
