@@ -19,7 +19,7 @@ A correct answer should:
 
 ## Activity 1 Part A — Contract Solution
 
-### Contract answer
+### 1. Contract answer
 
 ```typescript
 /**
@@ -38,7 +38,7 @@ export interface DeleteTaskParams {
 ---
 
 
-### Set up the tab hygiene
+### 2. Set up the tab hygiene
 
 - Open the files Copilot needs to generate the implementation.
 
@@ -56,7 +56,7 @@ packages/backend/src/app.ts
 packages/backend/src/store/taskStore.ts
 ```
 
-### Prompt solution
+### 3. Prompt solution
 
 ```text
 Use the contract for DELETE /tasks/:id defined in packages/backend/src/types/task.ts.
@@ -72,7 +72,7 @@ Do not add fields or behaviors not specified in the contract.
 
 ---
 
-### What a correct result should include
+### 4. What a correct result should include
 
 #### Handler
 
@@ -130,7 +130,7 @@ packages/backend/src/app.ts
 packages/backend/src/store/taskStore.ts
 ```
 
-### Reasoning prompt solution
+### 1. Reasoning prompt solution
 
 ```text
 Before writing any code, reason through GET /api/tasks.
@@ -145,7 +145,7 @@ Do not write implementation code yet.
 
 ---
 
-### What the reasoning should conclude
+### 2. What the reasoning should conclude
 
 - tasks exist -> return `200` with an array of task objects
 - no tasks -> return `200` with `[]`
@@ -154,7 +154,7 @@ Do not write implementation code yet.
 
 ---
 
-## Task 2 Part B — Implementation Prompt Solution
+## 2. Implementation Prompt Solution
 
 ### Set up the implementation tab hygiene
 
@@ -174,7 +174,7 @@ packages/backend/src/app.ts
 packages/backend/src/store/taskStore.ts
 ```
 
-### Implementation prompt solution
+### 3. Implementation prompt solution
 
 ```text
 Using the approach you just described, implement GET /api/tasks.
@@ -186,7 +186,7 @@ Do not add fields or behaviors not in the existing task type.
 
 ---
 
-### What a correct result should include
+### 4. What a correct result should include
 
 #### Handler
 
