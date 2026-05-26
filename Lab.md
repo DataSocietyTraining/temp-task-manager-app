@@ -359,7 +359,7 @@ Apply the same reasoning-first workflow to the task-list route.
 |---|---|
 | `GET /tasks` | `GET /api/tasks` |
 
-This route has no request body and no required parameters, but it still has an edge case worth reasoning through first.
+- This route has no request body and no required parameters, but it still has an edge case worth reasoning through first.
 
 - 1. Complete the following reasoning prompt similar to the one covered in demo 2
 
