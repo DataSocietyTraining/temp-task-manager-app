@@ -15,9 +15,9 @@ A correct answer should:
 
 ---
 
-## Task 1 — Contract-First Prompting for `DELETE /tasks/:id`
+## Activity 1 — Contract-First Prompting for `DELETE /tasks/:id`
 
-## Task 1 Part A — Contract Solution
+## Activity 1 Part A — Contract Solution
 
 ### Contract answer
 
@@ -37,7 +37,6 @@ export interface DeleteTaskParams {
 
 ---
 
-## Task 1 Part B — Prompt Solution
 
 ### Set up the tab hygiene
 
@@ -106,13 +105,12 @@ Copilot may also generate:
 packages/backend/src/schemas/task.ts
 ```
 
-That schema should coerce the URL id to a positive integer before the delete logic runs.
 
 ---
 
-## Task 2 — Chain-of-Thought for `GET /api/tasks`
+## Activity 2 — Chain-of-Thought for `GET /api/tasks`
 
-## Task 2 Part A — Reasoning Prompt Solution
+## Activity 2 Part A — Reasoning Prompt Solution
 
 ### Set up the reasoning tab hygiene
 
