@@ -361,7 +361,9 @@ Apply the same reasoning-first workflow to the task-list route.
 
 - This route has no request body and no required parameters, but it still has an edge case worth reasoning through first.
 
-- 1. Complete the following reasoning prompt similar to the one covered in demo 2
+- 1. Complete the following reasoning prompt by filling in the missing parts, so that the prompt asks Copilot to reason about normal success, the empty-list case, the correct success status code, and any response exposure concerns before any code is generated.
+
+```text
 
 ```text
 Before writing any code, reason through GET /api/tasks.
@@ -376,10 +378,11 @@ Before writing any code, reason through GET /api/tasks.
 Do not write implementation code yet.
 
 ```
-- 2. Review the reasoning
-- 3. write the implementation prompt using the above reasoning
-- 4. Check for the handler and the route for `GET /api/tasks`
+- 2. Review the reasoning carefully and confirm that the route behavior treats an empty task list as a valid success case instead of an error case.
 
+- 3. Write the implementation prompt using the accepted reasoning so the generated code stays aligned with the expected response shape, status code, and route behavior.
+
+- 4. Check the generated handler and route for GET /api/tasks and confirm that the handler returns the task list correctly while the route wiring connects the correct GET endpoint.
 ---
 
 
