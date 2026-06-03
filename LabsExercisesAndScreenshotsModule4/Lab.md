@@ -1,16 +1,20 @@
 # Module 4 - Prompting for UI Based on a Visual Contract
 
+
+
 ## Lab Guide
 
-This guide contains the demo walkthroughs and the activity instructions for Module 4. Follow each demo alongside the instructor in VS Code. Refer to this document during the session whenever you need to revisit a prompt, a tab list, or a check.
+This guide contains the Lab walkthroughs and the activity instructions for Module 4. Follow each lab task alongside the instructor in VS Code. Refer to this document during the session whenever you need to revisit a prompt, a tab list, or a check.
 
 > *LLM outputs are non-deterministic - your outputs may differ from what the instructor or this guide shows. Treat the references here as expected behavior, not as exact matches.*
 
 > **Note for learners**: The front-end for subsequent modules may start from a template that differs from the Module 3 end state. This is intentional and designed to support each module's learning objectives.
 
+This Lab uses the branch `module-4-start`
+
 ---
 
-## Module 4 Demo 1 - The vague UI prompt
+## Module 4 Lab 1 - The vague UI prompt
 
 **Goal:** Run a deliberately vague UI prompt and observe what Copilot has to guess when no visual contract is given.
 
@@ -46,15 +50,15 @@ Use React, TypeScript, and Tailwind CSS.
 
 ### What to look out for in the output
 
-The output can look usable, but Copilot filled in several decisions on its own:
+The output can look usable, but Copilot fills in several decisions on its own based on the vague prompt:
 
-- **Spacing** - how much padding and gap between elements
-- **Colors** - which palette, what hue for the accent
-- **Layout** - centered, left-aligned, full-width
-- **Component structure** - one file or many, where boundaries fall
-- **Interaction behavior** - what happens on add, complete, delete
+- **Spacing**: padding and gaps between elements
+- **Colors** : overall palettes, hues 
+- **Layout**: page and element alignment
+- **Component structure**: number of files, boundary placement
+- **Interaction behavior**: actions when selecting add, complete, delete
 
-Reasonable assumptions are not the same as design decisions.
+These assumptions, while potentially reasonable, are not the same as design decisions.
 
 ### Quick contrast - valid code can still fail the task
 
@@ -70,7 +74,7 @@ Create a TaskCard component with title, assignee, and status badge.
 
 This is the integration gap - valid code is not automatically useful code.
 
-### What the vague prompt was not saying
+### Copilot’s guesses based on a vague prompt
 
 | Missing detail       | What Copilot had to guess                 |
 | -------------------- | ----------------------------------------- |
@@ -80,13 +84,13 @@ This is the integration gap - valid code is not automatically useful code.
 | Behavior             | How add, complete, and delete should work |
 | Integration          | Where new code appears in the app         |
 
-The next step is not a longer prompt - it is a more constrained prompt.
+The next step is not a longer prompt, but rather a more constrained prompt.
 
 ---
 
-## Module 4 Demo 2 - The constrained UI prompt
+## Module 4 Lab 2 - The constrained UI prompt
 
-**Goal:** Run a constrained prompt that names layout, component boundaries, behavior, and styling so Copilot has fewer decisions to invent.
+**Goal:** Run a constrained prompt that names layout, component boundaries, behavior, and styling so Copilot has fewer decisions to make.
 
 ### Tab hygiene
 
@@ -96,7 +100,7 @@ Open the files Copilot needs to understand the app:
 - `types/task.ts`
 - `App.tsx`
 
-Keep unrelated files closed. The goal is to give Copilot enough signal to follow structure and behavior - this mirrors the curated-tab discipline from Module 1.
+Keep unrelated files closed. The goal is to give Copilot enough signal to follow structure and behavior.
 
 ### Prompt
 
@@ -140,7 +144,7 @@ Notice how the prompt separates requirements into clear sections: acceptance cri
 
 ### Expected result
 
-- The layout is more controlled
+- The layout reflects human decisions
 - The app has a clearer input, list, and task item flow
 - Add and complete behavior are easier to verify
 - Local state is used
@@ -150,11 +154,11 @@ The output is still not visually final, but the behavior and structure are easie
 
 ---
 
-## Activity - Task 1: From vague to constrained - app header
+## Exercise - Task 1: From vague to constrained - app header
 
-**Goal:** Rewrite a vague UI prompt for the Methodical Tasks app header. This is a prompting exercise, not a React test.
+**Goal:** Rewrite a vague UI prompt as a constrained prompt for the Methodical Tasks app header. This is a prompting exercise, not a React test.
 
-### The starting (vague) prompt
+### The initial vague prompt, to be rewritten:
 
 ```text
 Create the app header with navigation.
@@ -162,13 +166,17 @@ Create the app header with navigation.
 Use React, TypeScript, and Tailwind CSS
 ```
 
-### Before rewriting, answer these three questions
+### Before rewriting, consider these three questions:
 
 1. What would Copilot have to guess from this prompt?
 2. Which guess would matter most if it is wrong?
 3. What constraint would remove that guess?
 
-### What your rewritten prompt should define
+Feel free to jot notes down or share ideas in the meeting chat, but this is not required.
+
+### Constructing the rewritten prompt:
+
+Using the table below as a guide, <b>re-write the vague prompt</b> in the Copilot chat. 
 
 | Prompt area     | Include                                                  |
 | --------------- | -------------------------------------------------------- |
@@ -178,28 +186,31 @@ Use React, TypeScript, and Tailwind CSS
 | Constraints     | No local state inside Header or TabNavigation            |
 | File boundaries | Header and TabNavigation stay separate                   |
 
-### Tab hygiene before you run
+
+### Tab hygiene for running the revised prompt
 
 - Keep `Header.tsx`, `TabNavigation.tsx`, and the relevant `App.tsx` usage open if needed
 - Close unrelated components
 
-### After running
+### After running the constrained prompt
 
-- Run your rewritten prompt and compare the output to the wireframe / reference design
-- Look at what changed and what did not change
+- Compare the output to the wireframe / reference design
+- Note which elements changed and which ones did not
 
-The reference solution is in `Exercise.md`.
+### Reference solution
+
+The reference answers can be found in `Exercise.md`.
 
 ---
 
-## Module 4 Demo 3 - Screenshot as a visual contract
+## Module 4 Lab 3 - Screenshot as a visual contract
 
 **Goal:** Use a screenshot as the visual source of truth in place of description-based prompting.
 
 ### Setup
 
-- Attach the target UI screenshot in Copilot Chat (the completed Methodical Tasks Tasks view)
-- The screenshot becomes the visual contract for the prompt
+- Download the target UI screenshot in Copilot Chat (the completed Methodical Tasks view)
+- This screenshot becomes the visual contract for the prompt
 
 ### Tab hygiene
 
@@ -253,7 +264,7 @@ Screenshot reduces ambiguity, but does not eliminate it.
 
 A stricter screenshot prompt defines what *matching* means, tells Copilot how to handle ambiguity, limits unrelated file edits, and preserves component boundaries and TypeScript contracts. The visible change between passes may be small - the important improvement is reliability.
 
-### The tighter screenshot prompt - what it adds
+### The tighter screenshot prompt: added context
 
 ```text
 I am attaching a **screenshot** that is the visual source of truth. Generate React + TypeScript + Tailwind to match it.
@@ -289,7 +300,7 @@ Output:
 
 ---
 
-## Activity - Task 2: Read the screenshot prompt - what is missing?
+## Exercise - Task 2: Identify missing components in a screenshot prompt
 
 **Goal:** This is an analysis exercise. Do not run any prompts. Read the screenshot prompt from Demo 3 and identify what the prompt still needs to define, even with a screenshot attached.
 
@@ -299,6 +310,9 @@ Output:
 - A tighter version of the same prompt above that adds review criteria, ambiguity handling, and scope limits
 
 ### Answer these questions
+
+- In your notes, jot down responses to the following questions.
+- Then, choose one question and share your response to that question in the chat.
 
 1. The screenshot shows layout and structure - but what about **behavior** (hover, focus, click, expand) is not specified by an image alone?
 2. The prompt asks Copilot to "match closely" - what does *matching* actually mean? Pixel-perfect, or approximate?
@@ -318,4 +332,8 @@ Output:
 
 A screenshot shows structure, but the prompt still defines the rules.
 
-The reference answers are in `Exercise.md`.
+### Reference solution
+
+The reference answers can be found in `Exercise.md`.
+
+The next Lab begins on the branch `module-5-start`
