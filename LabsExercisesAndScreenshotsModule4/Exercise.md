@@ -87,7 +87,7 @@ The pattern is: **build prompt → inspect output → add missing integration**.
 
 ## Task 2 solution - What the screenshot prompt is not saying
 
-The screenshot from Demo 3 carries layout, hierarchy, spacing, and color relationships. It does not carry behavior, contracts, or scope limits. A stronger prompt fills in what the image cannot.
+The screenshot from Lab 3 carries layout, hierarchy, spacing, and color relationships. It does not carry behavior, contracts, or scope limits. A stronger prompt fills in what the image cannot.
 
 ### Answers to the four questions
 
