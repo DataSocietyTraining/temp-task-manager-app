@@ -176,7 +176,7 @@ Capture two TaskItem screenshots from Figma:
 
 ### Prompt
 
-Attach both screenshots (REVISED FILE NAMES HERE) in Copilot Chat (Agent mode), then run:
+Attach both screenshots (REVISED FILE NAMES) in Copilot Chat (Agent mode), then run:
 
 ```text
 I am sharing screenshots of two UI states. Build components that implement both states.
