@@ -251,7 +251,6 @@ Wire this into App.tsx for full navigation behavior so I can see how it works
 
 1. What should each button click do in each state?
 2. What is the exact subtitle string pattern?
-3. How could you use the AI assistant to write this prompt?
 
 ### Verify after running
 
