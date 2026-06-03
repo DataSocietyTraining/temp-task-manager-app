@@ -10,8 +10,10 @@ This document contains the reference answer for the activity task in Module 5. T
 
 A strong filled-in prompt looks like this:
 
+Attach both screenshots (M5_ExerciseTask1_state1.png, M5_ExerciseTask1_state2.png) in Copilot Chat (Agent mode), then run:
+
 ```text
-Build the FocusModeCard component with two states - same layout, only the button changes.
+Build the FocusModeCard component with two states - same layout, only the button changes. I am sharing screenshots of two UI states. Build components that implement both states.
 
 When the user is not in focus view, the button should say 'View Insights' and take them to the insights view.
 When they are in focus view, it should say 'Back to Tasks' and return them to the task list.
