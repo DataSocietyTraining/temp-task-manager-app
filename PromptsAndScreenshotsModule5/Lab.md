@@ -1,14 +1,18 @@
 # Module 5 - Figma MCP and Variant Prompting
 
+
+
 ## Lab Guide
 
 This guide contains the demo walkthroughs and the activity instructions for Module 5. Follow each demo alongside the instructor in VS Code. Refer to this document during the session whenever you need to revisit a prompt, a tab list, or a validation check.
 
 > LLM outputs are non-deterministic - your outputs may differ from what the instructor or this guide shows. Treat the references here as expected behavior, not as exact matches.
 
+This Lab uses the branch `module-5-start`
+
 ---
 
-## Module 5 Demo 1 - Connect Figma MCP and extract design context
+## Module 5 Lab 1 - Connect Figma MCP and extract design context
 
 **Goal:** Verify that Copilot can retrieve structured design values from a Figma frame through MCP.
 
@@ -33,7 +37,7 @@ This guide contains the demo walkthroughs and the activity instructions for Modu
 ```
 
 4. Click `Start` above the `figma` server entry.
-5. Complete Figma OAuth in the browser.
+5. Complete Figma OAuth (authentication) in the browser.
 
 ### Branch baseline
 
@@ -69,7 +73,7 @@ Get design context from this Figma frame
 
 ---
 
-## Module 5 Demo 2 - Vague vs constrained Figma prompt
+## Module 5 Lab 2 - Vague vs constrained Figma prompt
 
 **Goal:** Compare how prompt specificity changes structure and scope when the same Figma source is used.
 
@@ -96,7 +100,7 @@ Match spacing, font sizes, and colors precisely.
 ### Expected first-pass behavior
 
 - Visual output can look close because MCP supplies design values.
-- Structure can drift because component boundaries were not constrained.
+- Structure can drift because component boundaries are not constrained.
 - Copilot may collapse implementation into fewer files.
 
 ### Reset before second pass
@@ -135,9 +139,9 @@ Behavior: no API calls; keep components presentational
 Output: complete working React + TypeScript code. Visual fidelity over abstraction
 ```
 
-### Expected second-pass behavior
+### Expected behavior
 
-- Visual output may still look similar to vague pass.
+- Visual output may still look similar to the vague pass.
 - Structural quality improves: separate component files, clearer contracts, better traceability.
 - Files modified should reflect the required component boundaries.
 
@@ -172,7 +176,7 @@ Capture two TaskItem screenshots from Figma:
 
 ### Prompt
 
-Attach both screenshots in Copilot Chat (Agent mode), then run:
+Attach both screenshots (REVISED FILE NAMES HERE) in Copilot Chat (Agent mode), then run:
 
 ```text
 I am sharing screenshots of two UI states. Build components that implement both states.
@@ -199,16 +203,16 @@ Design already solved the variants - reuse structure, do not reinvent it.
 
 ---
 
-## Activity - Task 1: Build the FocusModeCard variant prompt
+## Exercise - Task 1: Build the FocusModeCard variant prompt
 
-**Goal:** Write and run a prompt that generates one FocusModeCard component with two visual states.
+**Goal:** Complete the construction of a prompt that generates one FocusModeCard component with two visual states: one that represents the card in a standard view, and one that changes the card into “Focus Mode.” 
 
 ### Scenario
 
-- FocusModeCard appears when high-impact tasks exist.
-- Same layout in both states.
-- Button changes by state:
-  - Not in Focus view: `View Insights`
+- You want to design this application to include a FocusModeCard that appears when high-impact tasks exist for the user. 
+- The card should have the same layout in both states.
+- However, the button on the card should change based on which state is activated:
+  - Standard (not in Focus view): `View Insights`
   - In Focus view: `Back to Tasks`
 
 ### Tab hygiene
@@ -221,7 +225,7 @@ Open only:
 
 ### Prompt scaffold
 
-Fill the missing parts before running:
+Fill the missing sections of this prompt before running:
 
 ```text
 Build the FocusModeCard component with two
@@ -234,8 +238,7 @@ When they are in focus view, it should say
 
 The card has a dark purple gradient background,
 a bold white 'Focus Mode' title, and a subtitle
-that reads [BLANK 3]. It also has [BLANK 4] in
-the bottom-right corner.
+that reads [BLANK 3]. 
 
 Use the existing Button component - don't create
 a new one. One component, one return statement,
@@ -248,7 +251,7 @@ Wire this into App.tsx for full navigation behavior so I can see how it works
 
 1. What should each button click do in each state?
 2. What is the exact subtitle string pattern?
-3. What decorative element appears in the card corner?
+3. How could you use the AI assistant to write this prompt?
 
 ### Verify after running
 
@@ -257,4 +260,9 @@ Wire this into App.tsx for full navigation behavior so I can see how it works
 - Existing shared `Button` component is reused.
 - Navigation wiring works from Tasks to Focus and back.
 
-Reference solution is in `Exercise.md`.
+
+### Reference solution
+
+The reference answers can be found in `Exercise.md`.
+
+The next Lab begins on the branch `module-6-start`
