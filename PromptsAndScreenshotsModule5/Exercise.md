@@ -10,13 +10,15 @@ This document contains the reference answer for the activity task in Module 5. T
 
 A strong filled-in prompt looks like this:
 
+Attach both screenshots (M5_ExerciseTask1_state1.png, M5_ExerciseTask1_state2.png) in Copilot Chat (Agent mode), then run:
+
 ```text
-Build the FocusModeCard component with two states - same layout, only the button changes.
+Build the FocusModeCard component with two states - same layout, only the button changes. I am sharing screenshots of two UI states. Build components that implement both states.
 
 When the user is not in focus view, the button should say 'View Insights' and take them to the insights view.
 When they are in focus view, it should say 'Back to Tasks' and return them to the task list.
 
-The card has a dark purple gradient background, a bold white 'Focus Mode' title, and a subtitle that reads '{count} high-impact tasks waiting'. It also has a decorative blurred circle in the bottom-right corner.
+The card has a dark purple gradient background, a bold white 'Focus Mode' title, and a subtitle that reads '{count} high-impact tasks waiting'.
 
 Use the existing Button component - don't create a new one. One component, one return statement, no duplicated layout.
 
@@ -30,7 +32,6 @@ Wire this into App.tsx for full navigation behavior so I can see how it works
 | Two-state instruction | Forces one component to handle both states |
 | Button behavior lines | Defines both label and click action; prevents static labels |
 | Subtitle format | Prevents vague text and ensures dynamic count rendering |
-| Decorative detail | Preserves visual fidelity instead of minimal functional output |
 | Reuse existing Button | Prevents duplicate button implementations |
 | One return / no duplicated layout | Enforces true variant modeling over copy-paste UI |
 | Wire into App.tsx | Prevents a valid component that is never integrated |
