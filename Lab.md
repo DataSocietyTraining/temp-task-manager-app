@@ -6,11 +6,13 @@ This guide contains the demo walkthroughs and the activity instructions for Modu
 
 > LLM outputs are non-deterministic - your outputs may differ from what the instructor or this guide shows. Treat the references here as expected behavior, not as exact matches.
 
+This Lab uses the branch `module-6-start`
+
 ---
 
-## Module 6 Demo 1 - Token extraction
+## Module 6 Lab 1 - Token extraction
 
-**Goal:** Generate `theme.ts` from the hardcoded values already in `TaskItem.tsx` and `TaskInput.tsx`.
+**Goal:** Generate `theme.ts` from the hardcoded values in `TaskItem.tsx` and `TaskInput.tsx`.
 
 ### Setup
 
@@ -20,7 +22,7 @@ This guide contains the demo walkthroughs and the activity instructions for Modu
    touch packages/frontend/src/theme.ts
    ```
 
-2. Open `tailwind.config.js` and confirm it has no custom tokens yet. The theme starts empty - nothing carries over from earlier modules.
+2. Open `tailwind.config.js` and confirm it has no custom tokens yet. The theme should start empty with no carry-over from earlier modules.
 
 ### Tab hygiene
 
@@ -35,7 +37,7 @@ Close every other file. With both components open, Copilot can see every hardcod
 
 ### Prompt
 
-In Copilot Chat (Agent mode), run:
+With `theme.ts` active, run the following in Copilot Chat (Agent mode):
 
 ```text
 From TaskItem.tsx and TaskInput.tsx, extract the following design tokens:
@@ -74,17 +76,29 @@ Even with a constrained prompt, the model often does things the prompt did not a
 
 A constrained prompt cuts guessing down - it does not stop it completely.
 
+### Discussion Question 
+
+- Can you find any items in the output on your local machine that the model created but you did not ask for in this prompt?
+
 ---
 
-## Module 6 Demo 2 - Constrained token refactor
+## Module 6 Lab 2 - Constrained token refactor
 
-**Goal:** Refactor `TaskItem.tsx` and `TaskInput.tsx` to consume values from `theme.ts`. Visual must stay identical. `Header.tsx` and `HeroSection.tsx` must not be touched.
+**Goal:** Refactor `TaskItem.tsx` and `TaskInput.tsx` to consume values from `theme.ts`. Visual appearance must stay identical and `Header.tsx` and `HeroSection.tsx` must not be touched.
 
 ### Tab hygiene
 
-- **Keep open**: `TaskItem.tsx`, `TaskInput.tsx`, `theme.ts`
-- Close any other files so they stay outside the refactor's reach
-- Save `theme.ts` before running the prompt - if it is incomplete, the model will import token names that have not been written yet, and the refactor will not compile
+**Keep open** these files in VS Code: 
+
+- `TaskItem.tsx` 
+- `TaskInput.tsx` 
+- `theme.ts`
+
+Close any other files so they stay outside the refactor's reach/
+
+Make sure that `TaskItem.tsx’ is the active tab.
+
+Save `theme.ts` before running the prompt - if it is incomplete, the model will import token names that have not been written yet, and the refactor will not compile.
 
 ### Prompt
 
@@ -113,17 +127,17 @@ The "Only touch" line is the scope guard. Without it, the model often "helpfully
 
 ---
 
-## Activity - Task 1: Write the constrained refactor prompt
+## Exercise - Task 1: Write the constrained refactor prompt
 
-**Goal:** Write the prompt that refactors `Header.tsx` and `HeroSection.tsx` to use `theme.ts`. This is a prompting exercise - not a React exercise.
+**Goal:** Write a prompt that refactors `Header.tsx` and `HeroSection.tsx` to use `theme.ts`. This is a prompting exercise - not a React exercise.
 
 ### The situation
 
-- `theme.ts` already holds the design tokens from Demo 1
+- `theme.ts` already holds the design tokens from Lab 1
 - `Header.tsx` and `HeroSection.tsx` still use hardcoded colors
-- `TaskItem.tsx` and `TaskInput.tsx` were updated earlier in Demo 2 - **leave them as-is**
+- `TaskItem.tsx` and `TaskInput.tsx` were updated earlier in Lab 2 - **leave them as-is**
 
-### Before writing the prompt, answer these three questions
+### Before writing the prompt, answer these three questions:
 
 1. What is the one allowed goal of this refactor?
 2. What three things must stay the same so the app still looks and runs the same?
@@ -131,10 +145,12 @@ The "Only touch" line is the scope guard. Without it, the model often "helpfully
 
 ### Tab hygiene before you run
 
-- **Open only**: `Header.tsx` (active), `HeroSection.tsx` (active), `theme.ts`
-- `theme.ts` must be fully saved before the prompt runs
+**Open only**: 
+- `Header.tsx` (active) 
+- `HeroSection.tsx` (active), 
+- `theme.ts` (must be fully saved before the prompt runs)
 
-> If `TaskItem.tsx` or `TaskInput.tsx` are open here, the model may decide to "re-refactor" them, which would overwrite Demo 2's work. Closing them is part of the scope discipline.
+NOTE: If `TaskItem.tsx` or `TaskInput.tsx` are open here, the model may decide to "re-refactor" them, which would overwrite Demo 2's work. Closing them is part of the scope discipline.
 
 ### After running
 
@@ -146,19 +162,27 @@ Verify:
 - `TaskItem.tsx` and `TaskInput.tsx` were not touched - the constraint held
 - No component or function was renamed
 
-The reference solution is in `Exercise.md`.
+### Reference solution
+
+The reference answers can be found in `Exercise.md`.
+
 
 ---
 
-## Module 6 Demo 3 - Performance optimization
+## Module 6 Lab 3 - Performance optimization
 
-**Goal:** Add `React.memo`, `useCallback`, and `useMemo` to `App.tsx` and `TaskItem.tsx` only where listed. No over-optimization.
+**Goal:** Add `React.memo`, `useCallback`, and `useMemo` to `App.tsx` and `TaskItem.tsx` only where listed without over-optimization.
 
 ### Tab hygiene
 
-- **Open**: `App.tsx` (active), `TaskItem.tsx`, `TaskList.tsx`
-- Close every other tab. `App.tsx` is one of the largest files in this workflow, so keeping unrelated files closed helps preserve relevant context
-- Every unnecessary open tab adds noise and can pull Copilot's focus away from the active task - this is the Module 1 noise-filter lesson at its most concrete
+**Open**: 
+- `App.tsx` (active), 
+- `TaskItem.tsx`, 
+- `TaskList.tsx`
+
+Close every other tab. `App.tsx` is one of the largest files in this workflow, so keeping unrelated files closed helps preserve relevant context
+
+Every unnecessary open tab adds noise and can pull Copilot's focus away from the active task (this is the Module 1 noise-filter lesson at its most concrete)
 
 ### Prompt
 
@@ -195,7 +219,7 @@ Output: optimized code with a comment on each change explaining what it does and
 - Each change has a one-line comment explaining what and why
 - Nothing else in the app was touched
 
-The app looks and behaves the same. The render work is reduced under the hood.
+The app looks and behaves the same and work to render is reduced under the hood.
 
 ### Verify behavior in the browser
 
@@ -215,7 +239,7 @@ If `TaskInput`, `FocusModeCard`, `Header`, or `HeroSection` show up in the model
 
 ---
 
-## Activity - Task 2: Read the optimization prompt - what is missing?
+## Exercise - Task 2: Identify missing components in the optimization prompt
 
 **Goal:** This is an analysis exercise. Do not run any prompts. Read a flawed optimization prompt and identify what is missing, what is unnecessary, and what constraint is too weak.
 
@@ -243,9 +267,9 @@ Constraints:
 Output: optimized files with comments explaining each change.
 ```
 
-Something is **missing**, something is **unnecessary**, and one constraint is **too weak**.
+In this prompt, something is **missing**, something is **unnecessary**, and one constraint is **too weak**.
 
-### Answer these three questions
+### Answer these three questions to identify the flawed components
 
 1. The prompt says "wrap FocusModeCard with React.memo so it only re-renders when its props change." Look at how `onViewInsights` and `onBackToTasks` are passed in from `App.tsx`. Using **Principle A** - what is missing from this instruction that will make it fail to work? Write one sentence fixing it.
 
@@ -253,4 +277,7 @@ Something is **missing**, something is **unnecessary**, and one constraint is **
 
 3. The constraints say "do not change the props interface of FocusModeCard" - but nothing stops the model from memoizing whatever else it decides is worth it inside the component. What might the model add that the prompt never asked for? Write one sentence that would prevent it.
 
-The reference answers are in `Exercise.md`.
+### Reference solution
+
+The reference answers can be found in `Exercise.md`.
+
