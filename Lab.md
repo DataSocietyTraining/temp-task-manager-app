@@ -1,11 +1,24 @@
- # Red/Green/Refactor & Constrained Refactoring
+# Module 3 - Red/Green/Refactor & Constrained Refactoring 
 
 
-# Live Demo 1 — `DELETE /tasks/:id`
+## Lab Guide
 
-- This demo uses the `DELETE /tasks/:id` endpoint.
+This guide contains the Lab walkthroughs and the activity instructions for Module 3. Follow each lab task alongside the instructor in VS Code. Refer to this document during the session whenever you need to revisit a prompt, a tab list, or a check.
 
-- The demo has three beats:
+> *LLM outputs are non-deterministic - your outputs may differ from what the instructor or this guide shows. Treat the references here as expected behavior, not as exact matches.*
+
+> **Note for learners**: 
+
+This lab uses the branch 'module-3-initial_state`
+
+---
+
+
+## Module 3 Lab 1 — `DELETE /tasks/:id`
+
+- This lab uses the `DELETE /tasks/:id` endpoint.
+
+- The lab has three beats:
 
 ```text
 Beat 1 — Red
@@ -17,7 +30,7 @@ You will temporarily replace the working handler with a `501` stub, generate fai
 
 ---
 
-# Before Beat 1 — Prepare the Demo Files
+## Before Beat 1 — Prepare the Lab Files
 
 - In the original starter state, the tests area may exist only as the parent folder:
 
@@ -25,7 +38,7 @@ You will temporarily replace the working handler with a `501` stub, generate fai
 packages/tests/
 ```
 
-- If `integration/` and `unit/` do not exist yet, create them before the live demo:
+- If `integration/` and `unit/` do not exist yet, create them before the live lab:
 
 ```text
 packages/tests/integration/
@@ -42,9 +55,9 @@ packages/tests/unit/taskSchemas.test.ts
 
 ---
 
-# Before Beat 1 — Prepare the DELETE Stub
+## Before Beat 1 — Prepare the DELETE Stub
 
-## Step 1: Open the controller file
+### Step 1: Open the controller file
 
 - Now with files required for tests in place, let's open the following controller file:
 
@@ -54,13 +67,13 @@ packages/backend/src/controllers/tasksController.ts
 
 ---
 
-## Step 2: Find `removeTask()`
+### Step 2: Find `removeTask()`
 
 - Find the existing `removeTask()` handler.
 
 ---
 
-## Step 3: Replace `removeTask()` with a `501` stub
+### Step 3: Replace `removeTask()` with a `501` stub
 
 - Temporarily replace `removeTask()` with the following:
 
@@ -72,9 +85,9 @@ export function removeTask(req: Request, res: Response): void {
 
 ---
 
-## Expected state
+### Expected state
 
-- `501` means the handler exists, but the behavior is intentionally not implemented for the demo.
+- `501` means the handler exists, but the behavior is intentionally not implemented for the lab.
 
 
 - The `501` response creates a controlled failure for the red phase.
@@ -82,7 +95,7 @@ export function removeTask(req: Request, res: Response): void {
 
 ---
 
-# Beat 1 — Red
+## Beat 1 — Red
 
 - Red indicates that the tests exist before the implementation exists.
 
@@ -98,7 +111,7 @@ export function removeTask(req: Request, res: Response): void {
 
 ---
 
-## Step 1: Set up the red tab hygiene
+### Step 1: Set up the red tab hygiene
 
 
 - Let’s open the files Copilot needs to generate the implementation.
@@ -120,7 +133,7 @@ packages/backend/src/app.ts
 
 ---
 
-## Why this tab setup matters
+### Why this tab setup matters
 
 
 - taskHttp.test.ts is where the failing HTTP integration tests go.
@@ -136,7 +149,7 @@ packages/backend/src/app.ts
 
 ---
 
-## Step 2: Generate failing tests
+### Step 2: Generate failing tests
 
 - Make sure to be on tab
 
@@ -168,7 +181,7 @@ Do not run tests or terminal commands.
 
 ---
 
-## Step 3: Review Copilot output
+### Step 3: Review Copilot output
 
 - Accept only changes to:
 
@@ -187,7 +200,7 @@ packages/tests/unit/taskSchemas.test.ts
 
 ---
 
-## Step 4: Run the red tests manually
+### Step 4: Run the red tests manually
 
 - Run the following command in the terminal to run the generated tests
 
@@ -205,13 +218,13 @@ The DELETE /tasks/:id tests fail.
 
 ---
 
-# Beat 2 — Green
+## Beat 2 — Green
 
 - Green is the smallest implementation that makes the red tests pass.
 
 ---
 
-## Step 1: Set up the green tab hygiene
+### Step 1: Set up the green tab hygiene
 
 - Let’s now open the files Copilot needs to generate the implementation.
 
@@ -234,7 +247,7 @@ packages/backend/src/app.ts
 
 ---
 
-## Why this tab setup matters
+### Why this tab setup matters
 
 
 - taskHttp.test.ts is now the behavioral signal.
@@ -251,7 +264,7 @@ packages/backend/src/app.ts
 
 ---
 
-## Step 2: Implement the DELETE handler
+### Step 2: Implement the DELETE handler
 
 - Make sure to be on tab:
 
@@ -285,7 +298,7 @@ Do not run tests or terminal commands.
 
 ---
 
-## Step 3: Review Copilot output
+### Step 3: Review Copilot output
 
 - Accept the update only if it changes:
 
@@ -307,7 +320,7 @@ removeTask()
 
 ---
 
-## Step 4: Run the green tests manually
+### Step 4: Run the green tests manually
 
 - Run the following command in the terminal
 
@@ -327,7 +340,7 @@ The DELETE /tasks/:id tests pass.
 
 ---
 
-# Green Is Not the Place to Be Creative
+## Green Is Not the Place to Be Creative
 
 | Good Green Phase | Risky Green Phase |
 |---|---|
@@ -344,7 +357,7 @@ That is the point.
 
 ---
 
-# Beat 3 — Refactor
+## Beat 3 — Refactor
 
 - Refactor means cleaner structure with the same behavior.
 
@@ -354,7 +367,7 @@ That is the point.
 
 ---
 
-## Step 1: Set up the refactor tab hygiene
+### Step 1: Set up the refactor tab hygiene
 
 - Let’s open the files Copilot needs to generate the implementation.
 
@@ -374,7 +387,7 @@ packages/backend/src/app.ts
 
 ---
 
-## Why this tab setup matters
+### Why this tab setup matters
 
 - tasksController.ts is the only refactor target.
 
@@ -391,7 +404,7 @@ packages/backend/src/app.ts
 
 ---
 
-## Step 2: Refactor `removeTask()` safely
+### Step 2: Refactor `removeTask()` safely
 
 - Make sure to be on tab:
 
@@ -425,7 +438,7 @@ Do not run tests or terminal commands.
 
 ---
 
-## Step 3: Review Copilot output
+### Step 3: Review Copilot output
 
 Accept the refactor only if:
 
@@ -441,7 +454,7 @@ Reject the other changes
 
 ---
 
-## Step 4: Run tests after refactor manually
+### Step 4: Run tests after refactor manually
 
 - Run the following command in the terminal
 
@@ -461,7 +474,7 @@ The DELETE /tasks/:id tests still pass.
 
 ---
 
-# The Three Prompts Form One Controlled Workflow
+## The Three Prompts Form One Controlled Workflow
 
 | Prompt | Purpose |
 |---|---|
@@ -473,15 +486,15 @@ The workflow is controlled because each prompt has one job.
 
 ---
 
-## Demo 2A — Unconstrained Refactor
+### Lab 2A — Unconstrained Refactor
 
-- Use the `removeTask()` handler from the previous Red / Green / Refactor demo.
+- Use the `removeTask()` handler from the previous Red / Green / Refactor lab.
 
 - At this point, the handler works. Now show what happens when the refactor prompt does not define boundaries.
 
 ---
 
-### Step 1: Open the target file
+#### Step 1: Open the target file
 
 - Let's open the working tab :
 
@@ -501,7 +514,7 @@ removeTask()
 
 ---
 
-### Step 2: Use the weak refactor prompt
+#### Step 2: Use the weak refactor prompt
 
 Paste the following prompt into Copilot:
 
@@ -514,7 +527,7 @@ Do not run tests or terminal commands.
 ---
 
 
-### Step 4: Discuss why the prompt is risky
+#### Step 3: Discuss why the prompt is risky
 
 - The prompt is risky because it does not say what must stay unchanged.
 
@@ -524,7 +537,7 @@ Do not run tests or terminal commands.
 
 ---
 
-### Demo takeaway
+### Lab takeaway
 
 ```text
 1. The problem is not that "Refactor this function" always fails.
@@ -536,7 +549,7 @@ Do not run tests or terminal commands.
 
 ---
 
-## Demo 2B — Constrained Refactor
+### Lab 2B — Constrained Refactor
 
 - Now let's run the same type of refactor with explicit boundaries.
 
@@ -546,11 +559,11 @@ The target is still:
 removeTask()
 ```
 
-- In this demo, tests are opened as gates and the prompt clearly protects behavior.
+- In this lab, tests are opened as gates and the prompt clearly protects behavior.
 
 ---
 
-### Step 1: Set up the constrained refactor tab hygiene
+#### Step 1: Set up the constrained refactor tab hygiene
 
 - Let’s open the files Copilot needs to generate the implementation.
 
@@ -573,13 +586,13 @@ Why this setup matters:
 ```text
 1. tasksController.ts is the refactor target
 2. unit and integration tests are visible behavior gates
-3. schemas/task.ts is not a refactor target in this demo
+3. schemas/task.ts is not a refactor target in this lab
 4. app.ts and routes are not being changed
 ```
 
 ---
 
-### Step 2: Select the target function
+#### Step 2: Select the target function
 
 - Let the working tab be the following:
 
@@ -601,7 +614,7 @@ Do not include other handlers in the selection.
 
 ---
 
-### Step 3: Use the constrained refactor prompt
+#### Step 3: Use the constrained refactor prompt
 
 Paste this prompt into Copilot:
 
@@ -621,11 +634,11 @@ All existing tests must still pass without any changes to test code.
 Do not run tests or terminal commands.
 ```
 
-For this `removeTask()` demo, “validation checks” means the id validation block that validates `req.params.id` before calling `deleteTask()`.
+For this `removeTask()` lab, “validation checks” means the id validation block that validates `req.params.id` before calling `deleteTask()`.
 
 ---
 
-### Step 4: Review Copilot output
+#### Step 4: Review Copilot output
 
 Accept the change only if:
 
@@ -643,7 +656,7 @@ Reject the change if Copilot edits anything outside that scope.
 
 ---
 
-### Step 5: Run tests manually
+#### Step 5: Run tests manually
 
 After accepting the constrained refactor, run:
 
@@ -667,7 +680,7 @@ The refactor was constrained, and the test suite remained the guard.
 
 ---
 
-### Demo takeaway
+### Lab takeaway
 
 ```text
 1. The constrained prompt tells Copilot what it may improve and what it must not touch.
@@ -698,7 +711,7 @@ Task 4 — Constrained Refactoring
 ```
 ---
 
-# Task 3 — Red / Green / Refactor for `PATCH /tasks/:id`
+## Exercise - Task 3 — Red / Green / Refactor for `PATCH /tasks/:id`
 
 - This task uses a Red / Green / Refactor workflow for the `PATCH /tasks/:id` endpoint.
 
@@ -718,7 +731,7 @@ Task 4 — Constrained Refactoring
 ```
 ---
 
-# Before Task 3 — Set Up the PATCH Stub
+## Before Task 3 — Set Up the PATCH Stub
 
 - Start with an intentionally incomplete `PATCH` handler.
 
@@ -735,7 +748,7 @@ export function patchTask(req: Request, res: Response): void {
 }
 
 
-# Task 3 Part A — Red
+## Task 3 Part A — Red
 
 ## Goal
 
@@ -769,7 +782,7 @@ PATCH /tasks/:id
   - Do not run tests or terminal commands.
 
 
-# Task 3 Part B — Green
+## Task 3 Part B — Green
 
 - Write one follow-up prompt that asks for the patchTask handler implementation only, such that every test from Part A passes. No extra features beyond what the tests require.
 
@@ -781,7 +794,7 @@ PATCH /tasks/:id
   - The sendValidationError helper for consistent 400 responses
 
 
-# Task 3 Part C — Refactor
+## Task 3 Part C — Refactor
 
 
 - Write and run a prompt that asks Copilot to refactor `patchTask()` for readability only.
@@ -806,14 +819,14 @@ PATCH /tasks/:id
 ---
 
 
-# Task 4 — Constrained Refactoring
+## Task 4 — Constrained Refactoring
 
 Task 4 focuses on the difference between an unconstrained refactor prompt and a fully constrained refactor prompt.
 
 
 ---
 
-# Task 4 Part A — Risk Inventory
+## Task 4 Part A — Risk Inventory
 
 
 - Write  an unconstrained refactoring prompt for the `patchTask()` handler.
@@ -836,7 +849,7 @@ Risks:
 
 ---
 
-# Task 4 Part B — Fully Constrained Prompt
+## Task 4 Part B — Fully Constrained Prompt
 
 
 - Rewrite Part A as a fully constrained prompt.
