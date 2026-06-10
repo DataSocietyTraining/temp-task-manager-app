@@ -1,4 +1,15 @@
-# Module - Contract-First Prompting and Chain-of-Thought 1
+# Module 2 -  Contract-First Prompting and Chain-of-Thought 
+
+
+## Lab Guide
+
+This guide contains the Lab walkthroughs and the activity instructions for Module 2. Follow each lab task alongside the instructor in VS Code. Refer to this document during the session whenever you need to revisit a prompt, a tab list, or a check.
+
+> *LLM outputs are non-deterministic - your outputs may differ from what the instructor or this guide shows. Treat the references here as expected behavior, not as exact matches.*
+
+> **Note for learners**: 
+
+This lab uses the branch 'module-2-initial_state`
 
 This lab walks through two prompting habits for backend API work:
 
@@ -9,9 +20,9 @@ You will work in `temp-task-manager-app` and use `task-manager-app` only as a fa
 
 ---
 
-# Demo 1 — Contract-First Prompting for `POST /tasks`
+##  Module 2 Lab 1 — Contract-First Prompting for `POST /tasks`
 
-This demo shows how to define route behavior before asking Copilot to implement it.
+This lab shows how to define route behavior before asking Copilot to implement it.
 
 The flow has four phases:
 
@@ -22,7 +33,7 @@ Phase 3 — Prompt Copilot from the contract
 Phase 4 — Review the generated code against the contract
 ```
 
-## Demo overview
+## Lab overview
 
 - The app needs a backend endpoint that lets a client create a task.
 - A task must have a title in the `text` field.
@@ -195,9 +206,9 @@ POST /api/tasks
 
 ---
 
-# Activity 1 — Contract-First Prompting for `DELETE /tasks/:id`
+## Exercise - Task 1 — Contract-First Prompting for `DELETE /tasks/:id`
 
-- This activity follows the same contract-first workflow from the `POST /tasks` demo.
+- This activity follows the same contract-first workflow from the `POST /tasks` lab.
 
 - In this activity, your goal is to define the route behavior before Copilot writes the implementation.
 
@@ -227,16 +238,16 @@ export interface DeleteTaskParams {
 ---
 
 
-# Demo 2 — Chain-of-Thought for `PATCH /tasks/:id`
+# Module 2 Lab 2 — Chain-of-Thought for `PATCH /tasks/:id`
 
-- This demo adds a reasoning checkpoint before implementation.
+- This lab adds a reasoning checkpoint before implementation.
 
 - The key business rule is easy to miss:
 
   - each PATCH field is optional
   - but the request body as a whole cannot be empty
 
-## Demo overview
+## Lab overview
 
 - The route updates selected fields on an existing task.
 - Only fields sent by the client should change.
@@ -355,7 +366,7 @@ In `packages/backend/src/routes/tasksRoutes.ts`, confirm that Copilot:
 
 ---
 
-# Activity 2 — Chain-of-Thought for `GET /api/tasks`
+## Exercise - Task 2 — Chain-of-Thought for `GET /api/tasks`
 
 Apply the same reasoning-first workflow to the task-list route.
 
