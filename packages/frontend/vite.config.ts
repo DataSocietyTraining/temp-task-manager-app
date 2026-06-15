@@ -13,7 +13,8 @@ export default defineConfig({
   server: {
     // 5174 avoids clashing with task-manager-app/frontend (5173) if both run locally
     port: 5174,
-    open: true,
+    open: false,
+    host: true, 
     proxy: apiProxy,
   },
   preview: {
