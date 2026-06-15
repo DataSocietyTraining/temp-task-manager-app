@@ -1,0 +1,41 @@
+{
+  "name": "Task Manager App",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
+
+  "remoteUser": "node",
+
+  // Install pnpm globally on container creation
+  "onCreateCommand": "npm install -g pnpm && pnpm config set store-dir /home/node/.pnpm-store",
+
+  // Install all workspace dependencies after the container is created
+  "postCreateCommand": "pnpm install",
+
+  // Forward the backend (3001) and frontend (5173) dev server ports
+  "forwardPorts": [3001, 5174],
+  "portsAttributes": {
+    "3001": {
+      "label": "Backend API",
+      "onAutoForward": "silent"
+    },
+    "5174": {
+      "label": "Frontend Dev Server",
+      "onAutoForward": "openBrowser"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "ms-vscode.vscode-typescript-next"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "typescript.preferences.importModuleSpecifier": "relative"
+      }
+    }
+  }
+}
