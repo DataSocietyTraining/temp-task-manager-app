@@ -1,12 +1,12 @@
 # MODULE-2 -  Contract-First Prompting and Chain-of-Thought
 
 
-**— The app you are building**
 The course is built around a single app called Methodical Tasks — a task manager with a React frontend and an Express backend. The app has three views: Tasks (create and manage tasks), Focus (high-impact tasks only), and Archive (completed tasks). You can see all three views in your reference handout.
-The backend uses TypeScript, Express, and Zod for validation. The frontend uses React, TypeScript, and Tailwind CSS. You will build both sides over the 5-day course.
+The backend uses TypeScript, Express, and Zod for validation. The frontend uses React, TypeScript, and Tailwind CSS. 
 
-**— Your two folders**
+
 You have two folders in your working environment:
+
 - **temp-task-manager-app** — this is your working directory. Everything you build through prompting goes here. It starts mostly empty. You will fill it in by writing prompts and generating code with Copilot across Days 1 through 5.
 - **task-manager-app** — this is the complete reference implementation. All the code is already there. If your prompt produces broken code, or if you get stuck and need to move on, copy what you need from here and continue. It is a fallback, not a cheat sheet.
 
@@ -84,14 +84,3 @@ The uploaded frontend Vite config uses port `5174` to avoid clashing with anothe
 - Frontend `fetchTasks()` currently returns `[]` from the learner stub.
 - Frontend `createTask`, `patchTask`, and `deleteTask` intentionally throw learner-stub errors.
 - Backend `POST`, `PATCH`, and `DELETE` controller logic is intentionally incomplete.
-
-## Main learner files
-
-```text
-packages/frontend/src/api/tasksApi.ts
-packages/backend/src/schemas/task.ts
-packages/backend/src/controllers/tasksController.ts
-packages/backend/src/routes/tasksRoutes.ts
-packages/tests/integration/tasksHttp.test.ts
-```
-
