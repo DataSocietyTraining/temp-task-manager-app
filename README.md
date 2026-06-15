@@ -37,4 +37,4 @@ packages/backend/src/routes/tasksRoutes.ts
 packages/tests/integration/tasksHttp.test.ts
 ```
 
-See `COPILOT_IMPLEMENTATION_PATH.md` for the exact prompt sequence.
+
