@@ -1,61 +1,77 @@
-# temp-task-manager-app
+This module is built around a single app called **Methodical Tasks** — a task manager with a React frontend and an Express backend. The app has three views: **Tasks** (create and manage tasks), **Focus** (high-impact tasks only), and **Archive** (completed tasks).
 
-- Frontend: React + Vite
-- Backend: Express + TypeScript
+The backend uses TypeScript, Express, and Zod for validation. The frontend uses React, TypeScript, and Tailwind CSS.
 
-## Prerequisites
+---
 
-- Node.js 20 or later
-- `pnpm`
+## Your Working Environment
 
-If `pnpm` is not installed, install it with:
+You have two folders:
 
-```bash
-npm install -g pnpm
-```
+- **`temp-task-manager-app`** — your working directory. Everything you build through prompting goes here.
+- **`task-manager-app`** — the complete reference implementation. If you get stuck, copy what you need from here and continue.
 
-## Install Dependencies
+---
 
-From the project root, run:
-
-```bash
-pnpm install
-```
-
-This installs dependencies for all workspace packages under `packages/`.
-
-## Run the Starter App
+## Getting Started
 
 Open two terminal tabs from the project root.
 
-Start the backend:
-
+**Start the backend:**
 ```bash
-pnpm --dir packages/backend dev
+pnpm dev:backend
 ```
 
-Start the frontend:
-
+**Start the frontend:**
 ```bash
-pnpm --dir packages/frontend dev
+pnpm dev:frontend
 ```
 
-Default local URLs:
+- Backend: http://localhost:3001
+- Frontend: http://localhost:5174
 
-- Frontend: `http://localhost:5174`
-- Backend: `http://localhost:3001`
+---
 
-## Build
+## Repository Structure
 
-Build the backend:
+```
+temp-task-manager-app/
+├── packages/
+│   ├── backend/
+│   │   └── src/
+│   │       ├── app.ts           ← Express app setup, CORS, routes, error handler
+│   │       ├── index.ts         ← Server entry point (port 3001)
+│   │       ├── config/
+│   │       │   └── index.ts     ← Port and CORS origin config
+│   │       ├── controllers/
+│   │       │   └── tasksController.ts  ← listTasks, createTask, patchTask, removeTask
+│   │       ├── middleware/
+│   │       │   └── errorHandler.ts     ← Global error handler
+│   │       ├── routes/
+│   │       │   └── tasksRoutes.ts      ← GET /api/tasks, POST, PATCH & DELETE /api/tasks/:id
+│   │       ├── schemas/
+│   │       │   └── task.ts      ← Zod schemas: createTaskBodySchema, patchTaskBodySchema, taskIdParamSchema
+│   │       ├── store/
+│   │       │   └── taskStore.ts ← In-memory task store with resetTaskStore()
+│   │       └── types/
+│   │           └── task.ts      ← Task interface (id, text, description, completed, isHighImpact)
+│   ├── frontend/
+│   │   └── src/
+│   │       ├── App.tsx          ← Root component, state management, tab routing
+│   │       ├── api/
+│   │       │   └── tasksApi.ts  ← fetchTasks, createTask, patchTask, deleteTask
+│   │       ├── components/      ← Header, TabNavigation, HeroSection, TaskInput, TaskItem,
+│   │       │                         TaskList, FocusModeCard, ArchiveActions, EmptyState, Button
+│   │       └── types/
+│   │           └── task.ts      ← Task interface (mirrors backend)
+│   └── tests/
+│       ├── integration/
+│       │   └── tasksHttp.test.ts        ← HTTP integration tests
+│       └── unit/
+│           ├── taskSchemas.test.ts      ← Zod schema unit tests
+│           └── taskStore.test.ts        ← Store unit tests
+└── package.json                 ← pnpm workspace root, dev/build/test scripts
 
-```bash
-pnpm --dir packages/backend build
 ```
 
-Build the frontend:
-
-```bash
-pnpm --dir packages/frontend build
-```
 
