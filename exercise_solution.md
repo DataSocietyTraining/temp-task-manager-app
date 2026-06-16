@@ -290,7 +290,7 @@ Risks:
 ```text
 packages/backend/src/controllers/tasksController.ts
 packages/tests/unit/taskSchemas.test.ts
-packages/tests/integration/tasksHttp.test.ts
+packages/tests/integration/taskHttp.test.ts
 ```
 
 - Make sure to keep the following files closed:

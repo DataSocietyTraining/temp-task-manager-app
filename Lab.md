@@ -570,7 +570,7 @@ removeTask()
 ```text
 packages/backend/src/controllers/tasksController.ts
 packages/tests/unit/taskSchemas.test.ts
-packages/tests/integration/tasksHttp.test.ts
+packages/tests/integration/taskHttp.test.ts
 ```
 
 - Make sure to keep the following files closed:
@@ -788,7 +788,7 @@ PATCH /tasks/:id
 
 
 ##  Prompt should reference:
-  - taskIdParamSchema for id validation
+  - patchTaskParamsSchema for id validation
   - patchTaskBodySchema for body validation, including the .refine() rule that rejects empty bodies
   - store.updateTask() for the actual update
   - The sendValidationError helper for consistent 400 responses
