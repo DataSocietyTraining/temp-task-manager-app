@@ -196,12 +196,12 @@ Rendering optimization:
 - Ensure each task uses task.id as its key - never array index
 
 Event handlers (required for React.memo to actually work):
-- Wrap toggleTask, deleteTask, toggleHighImpact with useCallback in App.tsx
+- Wrap handleToggleTask and handleDeleteTask with useCallback in App.tsx
 - These are passed to TaskItem - stable references are required or React.memo's comparison always fails
 
 Derived data:
-- Wrap filteredTasks with useMemo - dependencies are tasks and currentView
-- Wrap highImpactCount with useMemo - dependency is tasks only
+- Wrap visibleTasks with useMemo - dependencies are tasks and currentView
+- Wrap highImpactWaitingCount with useMemo - dependency is tasks only
 
 Constraints:
 - Do not change the props interface of any component
@@ -214,7 +214,7 @@ Output: optimized code with a comment on each change explaining what it does and
 
 ### Expected result
 
-- `App.tsx` now wraps the three handlers in `useCallback` and the derived values in `useMemo`
+- `App.tsx` now wraps the two handlers in `useCallback` and the derived values in `useMemo`
 - `TaskItem.tsx` is wrapped in `React.memo`
 - Each change has a one-line comment explaining what and why
 - Nothing else in the app was touched
