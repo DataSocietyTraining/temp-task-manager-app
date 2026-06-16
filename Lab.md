@@ -362,9 +362,9 @@ In `packages/backend/src/controllers/tasksController.ts`, confirm that the handl
 
 In `packages/backend/src/routes/tasksRoutes.ts`, confirm that Copilot:
 
-- imports the PATCH handler
-- wires the update route
-- keeps route wiring separate from handler behavior
+- Imports the patchTask handler from the controller
+- Connects PATCH /:id to the patchTask handler
+- Keeps the route definition in the router and the update logic in the controller
 
 ---
 
