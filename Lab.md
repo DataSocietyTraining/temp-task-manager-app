@@ -214,6 +214,8 @@ POST /api/tasks
 
 - 1. Complete the following contract. Read the route description carefully and fill in the missing return codes before moving to any implementation files.
 
+Hint: Use standard HTTP status codes: successful delete with no response body uses 204, invalid input uses 400, and a valid request for a missing task uses 404.
+
 ```text
 /**
  * DELETE /tasks/:id
