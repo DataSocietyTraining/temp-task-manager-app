@@ -10,6 +10,16 @@ This guide contains the demo walkthroughs and the activity instructions for Modu
 
 This Lab uses the branch `module-5-start`
 
+> **Prerequisites for Labs 1–2 (Figma MCP):** these two labs require a Figma
+> account, completing the Figma MCP OAuth sign-in inside VS Code (the Setup
+> steps below), and access to the design file linked in Lab 1. The link points
+> to a course-owned Figma file — confirm with your instructor that it is shared
+> with your account, or substitute your own Figma frame.
+> If you cannot complete the Figma OAuth or open that file, skip ahead to
+> **Demo 3** and the **Exercise**: the variant-prompting work uses the provided
+> screenshots in `PromptsAndScreenshotsModule5/` and does **not** depend on
+> Figma, so you can still complete the module's core objective.
+
 ---
 
 ## Module 5 Lab 1 - Connect Figma MCP and extract design context
