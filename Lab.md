@@ -570,7 +570,7 @@ removeTask()
 ```text
 packages/backend/src/controllers/tasksController.ts
 packages/tests/unit/taskSchemas.test.ts
-packages/tests/integration/tasksHttp.test.ts
+packages/tests/integration/taskHttp.test.ts
 ```
 
 - Make sure to keep the following files closed:
@@ -788,10 +788,10 @@ PATCH /tasks/:id
 
 
 ##  Prompt should reference:
-  - taskIdParamSchema for id validation
+  - patchTaskParamsSchema for id validation
   - patchTaskBodySchema for body validation, including the .refine() rule that rejects empty bodies
   - store.updateTask() for the actual update
-  - The sendValidationError helper for consistent 400 responses
+  - the consistent 400 shape `{ error: 'validation_error', message, details }` the other handlers return on a failed safeParse
 
 
 ## Task 3 Part C — Refactor
@@ -811,7 +811,6 @@ PATCH /tasks/:id
 - Status codes 400, 404, and 200 are not changed.
 - Response shapes are not changed.
 - The .refine() rule in patchTaskBodySchema that rejects empty bodies is not removed or weakened.
-- sendValidationError is not removed or moved to a new file.
 - No code is extracted to new files.
 - Do not run tests or terminal commands.
 
@@ -863,7 +862,7 @@ Risks:
 - One clearly stated allowed goal: readability only.
 - Do not rename patchTask or its parameters.
 - Do not change or remove the .refine() rule that rejects empty bodies.
-- Do not change the error shape returned by sendValidationError.
+- Do not change the 400 validation error shape (`{ error: 'validation_error', message, details }`).
 - Do not change status codes 400, 404, or 200.
 - Do not reorder id validation and body validation.
 - Id must be checked first.
