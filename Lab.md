@@ -360,7 +360,7 @@ In `packages/backend/src/controllers/tasksController.ts`, confirm that the handl
 
 ### Route review
 
-In `packages/backend/src/routes/tasksRoutes.ts`, confirm that Copilot:
+In `packages/backend/src/routes/tasksRoutes.ts`, confirm that the handler:
 
 - Imports the patchTask handler from the controller
 - Connects PATCH /:id to the patchTask handler
