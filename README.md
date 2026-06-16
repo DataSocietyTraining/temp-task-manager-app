@@ -1,40 +1,75 @@
-# temp task manager
+This course is built around a single app called **Methodical Tasks** — a task manager with a React frontend and an Express backend. The app has three views: **Tasks** (create and manage tasks), **Focus** (high-impact tasks only), and **Archive** (completed tasks).
 
-Lean starter derived from the completed Task Manager app.
+The backend uses TypeScript, Express, and Zod for validation. The frontend uses React, TypeScript, and Tailwind CSS.
 
-This version uses the uploaded learner frontend state. The UI is present, but `packages/frontend/src/api/tasksApi.ts` is intentionally stubbed so learners can implement the API client with Copilot.
+---
 
-The backend is also intentionally lean so learners can implement schema validation, route handlers, route mapping, and tests without fighting project setup issues.
+## Your Working Environment
 
-## Run
+You have two folders:
 
+- **`temp-task-manager-app`** — your working directory. Everything you build through prompting goes here.
+- **`task-manager-app`** — the complete reference implementation. If you get stuck, copy what you need from here and continue.
+
+---
+
+## Getting Started
+
+Open two terminal tabs from the project root.
+
+**Start the backend:**
 ```bash
-pnpm install
 pnpm dev:backend
+```
+
+**Start the frontend:**
+```bash
 pnpm dev:frontend
 ```
 
-Backend: http://localhost:3001  
-Frontend: http://localhost:5174
+- Backend: http://localhost:3001
+- Frontend: http://localhost:5174
 
-The uploaded frontend Vite config uses port `5174` to avoid clashing with another reference frontend on `5173`.
+---
 
-## Starter behavior
+## Repository Structure
 
-- `GET /api/health` works.
-- Backend `GET /api/tasks` returns `[]` so the UI can load.
-- Frontend `fetchTasks()` currently returns `[]` from the learner stub.
-- Frontend `createTask`, `patchTask`, and `deleteTask` intentionally throw learner-stub errors.
-- Backend `POST`, `PATCH`, and `DELETE` controller logic is intentionally incomplete.
-
-## Main learner files
-
-```text
-packages/frontend/src/api/tasksApi.ts
-packages/backend/src/schemas/task.ts
-packages/backend/src/controllers/tasksController.ts
-packages/backend/src/routes/tasksRoutes.ts
-packages/tests/integration/tasksHttp.test.ts
 ```
+temp-task-manager-app/
+├── packages/
+│   ├── backend/
+│   │   └── src/
+│   │       ├── app.ts           ← Express app setup, CORS, routes, error handler
+│   │       ├── index.ts         ← Server entry point (port 3001)
+│   │       ├── config/
+│   │       │   └── index.ts     ← Port and CORS origin config
+│   │       ├── controllers/
+│   │       │   └── tasksController.ts  ← listTasks, createTask, patchTask, removeTask
+│   │       ├── middleware/
+│   │       │   └── errorHandler.ts     ← Global error handler
+│   │       ├── routes/
+│   │       │   └── tasksRoutes.ts      ← GET /api/tasks, POST, PATCH & DELETE /api/tasks/:id
+│   │       ├── schemas/
+│   │       │   └── task.ts      ← Zod schemas: createTaskBodySchema, patchTaskBodySchema, taskIdParamSchema
+│   │       ├── store/
+│   │       │   └── taskStore.ts ← In-memory task store with resetTaskStore()
+│   │       └── types/
+│   │           └── task.ts      ← Task interface (id, text, description, completed, isHighImpact)
+│   ├── frontend/
+│   │   └── src/
+│   │       ├── App.tsx          ← Root component, state management, tab routing
+│   │       ├── api/
+│   │       │   └── tasksApi.ts  ← fetchTasks, createTask, patchTask, deleteTask
+│   │       ├── components/      ← Header, TabNavigation, HeroSection, TaskInput, TaskItem,
+│   │       │                         TaskList, FocusModeCard, ArchiveActions, EmptyState, Button
+│   │       └── types/
+│   │           └── task.ts      ← Task interface (mirrors backend)
+│   └── tests/
+│       ├── integration/
+│       │   └── tasksHttp.test.ts        ← HTTP integration tests
+│       └── unit/
+│           ├── taskSchemas.test.ts      ← Zod schema unit tests
+│           └── taskStore.test.ts        ← Store unit tests
+└── package.json                 ← pnpm workspace root, dev/build/test scripts
 
-
+```
