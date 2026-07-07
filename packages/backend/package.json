@@ -1,5 +1,5 @@
 {
-  "name": "task-manager-reference-api",
+  "name": "backend",
   "version": "1.0.0",
   "private": true,
   "description": "Reference Express API for the Task Manager UI (course demo)",
